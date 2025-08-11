@@ -23,9 +23,12 @@ RUN npx tsc && npx tsc-alias
 
 # --------- PRODUCTION stage
 FROM base AS prod
-# copy the compiled app
+# copy the compiled app & package.json & env file
 COPY --from=build /usr/src/app/dist ./dist
-# copy the .env file
+COPY --from=build /usr/src/app/package.json package.json
+COPY --from=build /usr/src/app/package-lock.json package-lock.json
 COPY .env .env
+# install dependencies (without dev ones)
+RUN npm ci --omit=dev
 # run the compiled app
 CMD [ "node", "--env-file=.env", "dist/app.js" ]
