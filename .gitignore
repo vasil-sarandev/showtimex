@@ -12,7 +12,6 @@ dist/
 
 # Env files
 .env.local
-.env.prod
 
 # OS or IDE-specific ignores
 *.log

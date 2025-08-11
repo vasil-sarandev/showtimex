@@ -1,6 +1,6 @@
 services:
   app:
-    image: node-express-ts-app:prod
+    image: showtimex:prod
     build:
       context: .
       target: prod

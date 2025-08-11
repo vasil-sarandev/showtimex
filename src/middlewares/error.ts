@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { KAFKA_ERRORS_TOPIC, kafka } from '@/lib/kafka';
 
 const UNEXPECTED_ERROR_MSG = 'An unexpected error has ocurred.';
 
@@ -21,12 +20,5 @@ export const errorMiddleware = (err: AppError, req: Request, res: Response, next
   }
   const status = err.status ?? 500;
   const message = err.message ?? UNEXPECTED_ERROR_MSG;
-
-  const errObj = { status, message };
-  kafka.send({
-    topic: KAFKA_ERRORS_TOPIC,
-    messages: [{ value: JSON.stringify(errObj) }],
-  });
-
   res.status(status).json({ message });
 };
