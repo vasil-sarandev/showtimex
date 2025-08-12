@@ -9,3 +9,26 @@ services:
       - /usr/src/app/node_modules  # Prevent overwriting node_modules inside container
     ports:
       - '3000:3000'
+    networks:
+      - internal-net
+
+  postgres: 
+    image: postgres:17
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data   # Persist db data to named volume
+    ports:
+      - '5432:5432'
+    networks:
+      - internal-net
+
+volumes:
+  db-data:
+
+networks:
+  internal-net:
+    driver: bridge
