@@ -1,12 +1,13 @@
 import express from 'express';
+import 'reflect-metadata';
 import { setupApp } from './lib/setup-app';
+import { APP_PORT } from './config';
 import { appRouter } from '@/components/app-router';
 import { errorMiddleware } from '@/middlewares/error';
 import { loggerMiddleware } from '@/middlewares/logger';
 
 const createServerCallback = () => {
   const app = express();
-  const port = parseInt(process.env.PORT as string);
 
   // parse jsons
   app.use(express.json());
@@ -17,8 +18,8 @@ const createServerCallback = () => {
   app.use(appRouter);
   app.use(errorMiddleware);
 
-  app.listen(port, '0.0.0.0', () => {
-    return console.log(`Express is listening at http://localhost:${port}`);
+  app.listen(APP_PORT, '0.0.0.0', () => {
+    return console.log(`Express is listening at http://localhost:${APP_PORT}`);
   });
 };
 
