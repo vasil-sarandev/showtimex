@@ -7,6 +7,11 @@ import {
   APP_DATABASE_TYPE,
   APP_DATABASE_USERNAME,
 } from '@/config';
+import { Event } from '@/components/event';
+import { Performer } from '@/components/performer';
+import { Ticket } from '@/components/ticket';
+import { User } from '@/components/user';
+import { Venue } from '@/components/venue';
 
 // forced to cast this because of TypeORM's type safety
 const type = APP_DATABASE_TYPE as 'postgres' | 'mysql' | 'mongodb';
@@ -20,7 +25,7 @@ export const AppDataSource = new DataSource({
   database: APP_DATABASE_USERNAME,
   synchronize: APP_DATABASE_SYNCHRONIZE_FLAG,
   logging: true,
-  entities: [],
+  entities: [Event, Performer, Ticket, User, Venue],
   subscribers: [],
   migrations: [],
 });
