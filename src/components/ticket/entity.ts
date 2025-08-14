@@ -1,0 +1,29 @@
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Event } from '../event';
+import { User } from '../user';
+
+const TICKET_PRICE_PRECISION = 10;
+const TICKET_PRICE_SCALE = 2;
+
+export enum TicketStatus {
+  reserved = 'RESERVED',
+  available = 'AVAILABLE',
+}
+
+@Entity()
+export class Ticket {
+  @PrimaryGeneratedColumn({ type: 'int' })
+  id: number;
+
+  @Column({ type: 'numeric', precision: TICKET_PRICE_PRECISION, scale: TICKET_PRICE_SCALE })
+  price: number;
+
+  @Column({ type: 'enum', enum: TicketStatus, default: TicketStatus.available })
+  status: TicketStatus;
+
+  @ManyToOne(() => Event, event => event.tickets)
+  event: Event;
+
+  @ManyToOne(() => User, user => user.tickets, { nullable: true })
+  user: User;
+}

@@ -14,6 +14,7 @@ Entities I'll be adding to the application:
 - Ticket
 - Performer
 - Venue
+- User
 
 ## API
 
@@ -26,4 +27,5 @@ Some notable endpoints:
 - `POST /API/ticket/reserve` (Transaction) -> Ticket
 - `GET /API/performer/${id}` -> Performer
 - `GET /API/venue/${id}` -> Venue
+- `GET /API/user/me` -> User
 - `GET /API/bffs/event-page/${id}` (Backend for Frontend Service) -> Event, Venue, Performer

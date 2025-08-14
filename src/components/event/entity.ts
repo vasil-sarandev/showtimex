@@ -1,0 +1,38 @@
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { Length } from 'class-validator';
+import { Ticket } from '../ticket';
+import { Performer } from '../performer';
+import { Venue } from '../venue';
+
+const TITLE_MAX_LEN = 100;
+
+@Entity()
+export class Event {
+  @PrimaryGeneratedColumn({ type: 'int' })
+  id: number;
+
+  @Column({ type: 'varchar', length: TITLE_MAX_LEN })
+  @Length(10, TITLE_MAX_LEN)
+  title: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  description: string | null;
+
+  @OneToMany(() => Ticket, ticket => ticket.event)
+  tickets: Ticket[];
+
+  @ManyToOne(() => Venue, venue => venue.events)
+  venue: Venue;
+
+  @ManyToMany(() => Performer, performer => performer.events)
+  @JoinTable()
+  performers: Performer[];
+}

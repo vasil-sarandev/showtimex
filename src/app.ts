@@ -1,5 +1,5 @@
-import express from 'express';
 import 'reflect-metadata';
+import express from 'express';
 import { setupApp } from './lib/setup-app';
 import { APP_PORT } from './config';
 import { appRouter } from '@/components/app-router';

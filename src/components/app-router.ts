@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { ticketsRouter } from './tickets/router';
+import { userRouter } from './user';
 
 export const appRouter = Router();
 
-appRouter.use('/tickets', ticketsRouter);
+appRouter.use('/users', userRouter);
