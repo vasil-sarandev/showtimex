@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
-const UNEXPECTED_ERROR_MSG = 'An unexpected error has ocurred.';
+const DEFAULT_ERROR_STATUS = 500;
+const DEFAULT_ERROR_MSG = 'An unexpected error has ocurred.';
 
 export interface IAppError extends Error {
   status: number;
@@ -8,9 +9,10 @@ export interface IAppError extends Error {
 
 export class AppError extends Error implements IAppError {
   status: number;
-  constructor(status: number, message: string) {
+  constructor(status?: number, message?: string) {
     super(message);
-    this.status = status;
+    this.status = status ?? DEFAULT_ERROR_STATUS;
+    this.message = message ?? DEFAULT_ERROR_MSG;
   }
 }
 
@@ -18,7 +20,10 @@ export const errorMiddleware = (err: AppError, req: Request, res: Response, next
   if (!err) {
     next();
   }
-  const status = err.status ?? 500;
-  const message = err.message ?? UNEXPECTED_ERROR_MSG;
-  res.status(status).json({ message });
+  if (err instanceof AppError) {
+    res.status(err.status).json({ message: err.message });
+    return;
+  }
+  // unexpected/uncaught errors
+  res.status(DEFAULT_ERROR_STATUS).json({ message: DEFAULT_ERROR_MSG });
 };
