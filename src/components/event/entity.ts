@@ -12,6 +12,7 @@ import { Ticket } from '../ticket';
 import { Performer } from '../performer';
 import { Venue } from '../venue';
 
+const TITLE_MIN_LEN = 10;
 const TITLE_MAX_LEN = 100;
 
 @Entity()
@@ -19,8 +20,8 @@ export class Event {
   @PrimaryGeneratedColumn({ type: 'int' })
   id: number;
 
-  @Column({ type: 'varchar', length: TITLE_MAX_LEN })
-  @Length(10, TITLE_MAX_LEN)
+  @Column({ type: 'varchar' })
+  @Length(TITLE_MIN_LEN, TITLE_MAX_LEN)
   title: string;
 
   @Column({ type: 'varchar', nullable: true })

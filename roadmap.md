@@ -29,3 +29,8 @@ Some notable endpoints:
 - `GET /API/venue/${id}` -> Venue
 - `GET /API/user/me` -> User
 - `GET /API/bffs/event-page/${id}` (Backend for Frontend Service) -> Event, Venue, Performer
+
+## Misc
+
+- Database seeds
+- Swagger

@@ -1,5 +1,6 @@
 import { DataSource } from 'typeorm';
 import {
+  APP_DATABASE,
   APP_DATABASE_HOST,
   APP_DATABASE_PASSWORD,
   APP_DATABASE_PORT,
@@ -16,13 +17,13 @@ import { Venue } from '@/components/venue';
 // forced to cast this because of TypeORM's type safety
 const type = APP_DATABASE_TYPE as 'postgres' | 'mysql' | 'mongodb';
 
-export const AppDataSource = new DataSource({
+export const appDataSource = new DataSource({
   type,
   host: APP_DATABASE_HOST,
   port: APP_DATABASE_PORT,
   username: APP_DATABASE_USERNAME,
   password: APP_DATABASE_PASSWORD,
-  database: APP_DATABASE_USERNAME,
+  database: APP_DATABASE,
   synchronize: APP_DATABASE_SYNCHRONIZE_FLAG,
   logging: true,
   entities: [Event, Performer, Ticket, User, Venue],
@@ -30,4 +31,4 @@ export const AppDataSource = new DataSource({
   migrations: [],
 });
 
-export const initializeTypeORM = () => AppDataSource.initialize();
+export const initializeTypeORM = () => appDataSource.initialize();

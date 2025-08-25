@@ -1,5 +1,5 @@
-import { IsFQDN, Length, Min } from 'class-validator';
-import { Check, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { IsUrl, Length, Min } from 'class-validator';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Event } from '../event';
 
 const MIN_CAPACITY = 500;
@@ -15,11 +15,10 @@ export class Venue {
 
   @Column({ type: 'int' })
   @Min(MIN_CAPACITY)
-  @Check(`"capacity" >= ${MIN_CAPACITY}`)
   capacity: number;
 
   @Column({ type: 'varchar', nullable: true })
-  @IsFQDN()
+  @IsUrl()
   google_maps_url: string | null;
 
   @OneToMany(() => Event, event => event.venue)
