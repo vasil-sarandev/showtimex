@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Event } from '../event/entity';
 import { User } from '../user/entity';
+import { Payment } from '../payment/entity';
 
 const TICKET_PRICE_PRECISION = 10;
 const TICKET_PRICE_SCALE = 2;
@@ -28,4 +29,7 @@ export class Ticket {
 
   @ManyToOne(() => User, user => user.tickets, { nullable: true })
   user: User;
+
+  @OneToOne(() => Payment, payment => payment.ticket)
+  payment: Payment;
 }

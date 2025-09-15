@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, OneToOne, ManyToOne, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, OneToOne, ManyToOne, Column, JoinColumn } from 'typeorm';
 import { Ticket } from '../ticket/entity';
 import { User } from '../user/entity';
 
@@ -16,10 +16,11 @@ export class Payment {
   @Column({ type: 'enum', enum: PaymentStatus, default: PaymentStatus.pending })
   status: PaymentStatus;
 
-  @Column({ type: 'int', nullable: true })
-  stripe_payment_id: number;
+  @Column({ type: 'varchar', nullable: true })
+  stripe_payment_id: string;
 
-  @OneToOne(() => Ticket, ticket => ticket)
+  @OneToOne(() => Ticket, ticket => ticket.payment)
+  @JoinColumn()
   ticket: Ticket;
 
   @ManyToOne(() => User, user => user.payments)
