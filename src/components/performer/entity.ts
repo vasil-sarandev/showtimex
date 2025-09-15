@@ -4,7 +4,7 @@ import { Event } from '../event/entity';
 
 @Entity()
 export class Performer {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'int' })
   id: number;
 
   @Column({ type: 'varchar', length: 100 })
