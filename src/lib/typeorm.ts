@@ -13,6 +13,7 @@ import { Performer } from '@/components/performer/entity';
 import { Ticket } from '@/components/ticket/entity';
 import { User } from '@/components/user/entity';
 import { Venue } from '@/components/venue/entity';
+import { Payment } from '@/components/payment/entity';
 
 // forced to cast this because of TypeORM's type safety
 const type = APP_DATABASE_TYPE as 'postgres' | 'mysql' | 'mongodb';
@@ -26,7 +27,7 @@ export const appDataSource = new DataSource({
   database: APP_DATABASE,
   synchronize: APP_DATABASE_SYNCHRONIZE_FLAG,
   logging: true,
-  entities: [Event, Performer, Ticket, User, Venue],
+  entities: [Event, Performer, Ticket, Payment, User, Venue],
   subscribers: [],
   migrations: [],
 });
