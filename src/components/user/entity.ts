@@ -1,6 +1,7 @@
 import { IsEmail, IsPhoneNumber } from 'class-validator';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Ticket } from '../ticket/entity';
+import { Payment } from '../payment/entity';
 
 @Entity()
 export class User {
@@ -23,4 +24,7 @@ export class User {
 
   @OneToMany(() => Ticket, ticket => ticket.user)
   tickets: Ticket[];
+
+  @OneToMany(() => Payment, payment => payment.user)
+  payments: Payment[];
 }

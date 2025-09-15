@@ -6,8 +6,10 @@ const TICKET_PRICE_PRECISION = 10;
 const TICKET_PRICE_SCALE = 2;
 
 export enum TicketStatus {
-  reserved = 'RESERVED',
   available = 'AVAILABLE',
+  // "RESERVED" is the status used to lock the ticket during payment session so no double booking occurrs.
+  reserved = 'RESERVED',
+  purchased = 'PURCHASED',
 }
 
 @Entity()
