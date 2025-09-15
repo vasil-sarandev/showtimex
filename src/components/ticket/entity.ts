@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Event } from '../event';
-import { User } from '../user';
+import { Event } from '../event/entity';
+import { User } from '../user/entity';
 
 const TICKET_PRICE_PRECISION = 10;
 const TICKET_PRICE_SCALE = 2;

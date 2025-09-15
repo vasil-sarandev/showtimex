@@ -8,11 +8,11 @@ import {
   APP_DATABASE_TYPE,
   APP_DATABASE_USERNAME,
 } from '@/config';
-import { Event } from '@/components/event';
-import { Performer } from '@/components/performer';
-import { Ticket } from '@/components/ticket';
-import { User } from '@/components/user';
-import { Venue } from '@/components/venue';
+import { Event } from '@/components/event/entity';
+import { Performer } from '@/components/performer/entity';
+import { Ticket } from '@/components/ticket/entity';
+import { User } from '@/components/user/entity';
+import { Venue } from '@/components/venue/entity';
 
 // forced to cast this because of TypeORM's type safety
 const type = APP_DATABASE_TYPE as 'postgres' | 'mysql' | 'mongodb';
