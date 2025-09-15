@@ -1,6 +1,6 @@
 import { IsUrl, Length, Min } from 'class-validator';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Event } from '../event';
+import { Event } from '../event/entity';
 
 const MIN_CAPACITY = 500;
 

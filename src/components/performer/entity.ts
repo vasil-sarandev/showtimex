@@ -1,6 +1,6 @@
 import { IsUrl } from 'class-validator';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
-import { Event } from '../event';
+import { Event } from '../event/entity';
 
 @Entity()
 export class Performer {

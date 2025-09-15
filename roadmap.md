@@ -10,6 +10,8 @@
 
 Entities I'll be adding to the application:
 
+(done)
+
 - Event
 - Ticket
 - Performer
@@ -26,11 +28,15 @@ Some notable endpoints:
 - `GET /API/ticket/search?status={status}&eventId={eventId}` -> Ticket[] or Partial<Ticket>[]
 - `POST /API/ticket/reserve` (Transaction) -> Ticket
 - `GET /API/performer/${id}` -> Performer
-- `GET /API/venue/${id}` -> Venue
-- `GET /API/user/me` -> User
+- `GET /API/venue/${id}` -> Venu
 - `GET /API/bffs/event-page/${id}` (Backend for Frontend Service) -> Event, Venue, Performer
+
+(done)
+
+- `GET /API/user/me` -> User (v)
 
 ## Misc
 
 - Database seeds
+- Migrations
 - Swagger
