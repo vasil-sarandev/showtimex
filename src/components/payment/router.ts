@@ -1,9 +1,16 @@
 import { Router } from 'express';
+import bodyParser from 'body-parser';
 import { paymentController } from './controller';
 import { authMiddleware } from '@/middlewares/auth';
 
-export const paymentsRouter = Router();
+export const paymentRouter = Router();
 
-paymentsRouter.use(authMiddleware);
+paymentRouter.use(authMiddleware);
 
-paymentsRouter.post('/initiate', paymentController.initiatePayment);
+paymentRouter.post('/initiate', paymentController.initiatePayment);
+paymentRouter.post(
+  '/stripe-webhook',
+  // parse raw body so webhook signature can be verified.
+  bodyParser.raw({ type: 'application/json' }),
+  paymentController.stripeWebhookHandler,
+);

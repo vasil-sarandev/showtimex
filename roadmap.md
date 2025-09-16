@@ -21,7 +21,6 @@ Entities I'll be adding to the application:
 
 ## API
 
-- handlers for payment result in tickets controler that are triggered by stripe webhooks: 1) successful - change ticket status to PURCHASED, payment to SUCCESSFUL; 2) failde - change ticket to AVAILABLE, payment to FAILED.
 - `POST /API/event` -> Event
 - `GET /API/event/$id` -> Event
 - `GET /API/event/search?term={term}&location={location}&date={date}&venue={venue}` -> Event[] or Partial<Event>[]
@@ -34,6 +33,7 @@ Entities I'll be adding to the application:
 (done)
 
 - `POST /API/payments/initiate` -> (transaction) initiate payment - create payment with status pending, set ticket status to RESERVED.
+- `POST /API/payments/stripe-webhook` -> (2x transaction handlers for succeeded / failed payment intents for tickets)
 - `GET /API/user/me` -> User
 - `GET /API/user/${id}` -> User
 
