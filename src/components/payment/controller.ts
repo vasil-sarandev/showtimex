@@ -5,8 +5,11 @@ class PaymentController {
   initiatePayment = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userId = parseInt(req.user!.sub as string);
-      const intent = await paymentService.initiatePayment({ userId, ticketId: req.body.ticketId });
-      res.status(200).json({ intent_id: intent.id, secret: intent.client_secret });
+      const intent = await paymentService.initiatePaymentTransaction({
+        userId,
+        ticketId: req.body.ticketId,
+      });
+      res.status(200).json(intent);
     } catch (err) {
       next(err);
     }
