@@ -13,11 +13,6 @@ class PaymentService {
     this.repository = injectedRepository ?? paymentRepository;
   }
 
-  // flow for the transaction:
-  // 1. find the ticket, set its status to RESERVED
-  // 2. create a payment in the table (with status PENDING)
-  // 3. create a stripe payment intent which contains the ticket and payment ids in metadata
-  // 4. return the payment intent to the client
   initiatePaymentTransaction = async ({
     userId,
     ticketId,
@@ -25,6 +20,11 @@ class PaymentService {
     userId: number;
     ticketId: number;
   }): Promise<Stripe.PaymentIntent> => {
+    // flow for the transaction:
+    // 1. find the ticket, set its status to RESERVED
+    // 2. create a payment in the table (with status PENDING)
+    // 3. create a stripe payment intent which contains the ticket and payment ids in metadata
+    // 4. return the payment intent to the client
     return appDataSource.transaction(async manager => {
       const ticket = await manager.findOneByOrFail(Ticket, { id: ticketId });
       if (ticket.status !== TicketStatus.available) {
