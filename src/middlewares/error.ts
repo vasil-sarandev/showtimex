@@ -21,9 +21,9 @@ export const errorMiddleware = (err: AppError, req: Request, res: Response, next
     next();
   }
   if (err instanceof AppError) {
-    res.status(err.status).json({ message: err.message });
-    return;
+    return res.status(err.status).json({ message: err.message });
   }
   // unexpected/uncaught errors
-  res.status(DEFAULT_ERROR_STATUS).json({ message: DEFAULT_ERROR_MSG });
+  console.error(err);
+  return res.status(DEFAULT_ERROR_STATUS).json({ message: DEFAULT_ERROR_MSG });
 };

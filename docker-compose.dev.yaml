@@ -4,6 +4,8 @@ services:
     build:
       context: .
       target: dev
+    environment:
+      - NODE_ENV=development
     volumes:
       - .:/usr/src/app       # Mount current directory inside container
       - /usr/src/app/node_modules  # Prevent overwriting node_modules inside container

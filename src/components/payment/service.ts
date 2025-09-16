@@ -1,10 +1,10 @@
 import { Repository } from 'typeorm';
 import Stripe from 'stripe';
 import { Ticket, TicketStatus } from '../ticket/entity';
-import { Payment } from './entity';
+import { Payment, PaymentStatus } from './entity';
 import { paymentRepository } from './repository';
 import { AppError } from '@/middlewares/error';
-import { appStripeInstance } from '@/lib/stripe';
+import { appStripeInstance, IStripeTicketPaymentIntentMetadata } from '@/lib/stripe';
 import { appDataSource } from '@/lib/typeorm';
 
 class PaymentService {
@@ -36,13 +36,56 @@ class PaymentService {
       const payment = manager.create(Payment, { ticket, user: { id: userId } });
       await manager.save(payment);
 
+      const metadata: IStripeTicketPaymentIntentMetadata = {
+        paymentId: payment.id.toString(),
+        ticketId: ticket.id.toString(),
+      };
       const paymentIntent = await appStripeInstance.paymentIntents.create({
         amount: Math.round(ticket.price * 100),
         currency: 'usd',
-        metadata: { paymentId: payment.id, ticketId: ticket.id },
+        metadata,
         automatic_payment_methods: { enabled: true }, // allows card, wallet, etc.
       });
       return paymentIntent;
+    });
+  };
+
+  handlePaymentSuccessTransaction = async ({
+    event,
+  }: {
+    event: Stripe.PaymentIntentSucceededEvent;
+  }) => {
+    // flow for the transaction:
+    // 1. find the ticket, set its status to PURCHASED
+    // 2. find the payment, set its status to SUCCESSFUL
+    const { ticketId, paymentId } = event.data.object.metadata;
+    return appDataSource.transaction(async manager => {
+      const ticket = await manager.findOneByOrFail(Ticket, { id: parseInt(ticketId) });
+      ticket.status = TicketStatus.purchased;
+      await manager.save(ticket);
+
+      const payment = await manager.findOneByOrFail(Payment, { id: parseInt(paymentId) });
+      payment.status = PaymentStatus.successful;
+      await manager.save(payment);
+    });
+  };
+  handlePaymentFailedTransaction = async ({
+    event,
+  }: {
+    event: Stripe.PaymentIntentPaymentFailedEvent | Stripe.PaymentIntentCanceledEvent;
+  }) => {
+    // flow for the transaction:
+    // 1. find the ticket, set its status to AVAILABLE
+    // 2. find the payment, set its status to FAILED
+    const { ticketId, paymentId } = event.data.object.metadata;
+    return appDataSource.transaction(async manager => {
+      const ticket = await manager.findOneByOrFail(Ticket, { id: parseInt(ticketId) });
+      ticket.status = TicketStatus.available;
+      await manager.save(ticket);
+
+      const payment = await manager.findOneByOrFail(Payment, { id: parseInt(paymentId) });
+      payment.status = PaymentStatus.failed;
+      await manager.save(payment);
     });
   };
 }

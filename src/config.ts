@@ -2,6 +2,8 @@
 export const APP_PORT = parseInt(process.env.APP_PORT as string);
 export const APP_JWT_SECRET = process.env.APP_JWT_SECRET as string;
 export const APP_STRIPE_API_KEY = process.env.APP_STRIPE_API_KEY as string;
+export const APP_STRIPE_PAYMENTS_WEBHOOK_SECRET_KEY = process.env
+  .APP_STRIPE_PAYMENTS_WEBHOOK_SECRET_KEY as string;
 // database
 export const APP_DATABASE_TYPE = process.env.APP_DATABASE_TYPE as string;
 export const APP_DATABASE_HOST = process.env.APP_DATABASE_HOST as string;

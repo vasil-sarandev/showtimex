@@ -9,11 +9,6 @@ import { loggerMiddleware } from '@/middlewares/logger';
 const createServerCallback = () => {
   const app = express();
 
-  // parse jsons
-  app.use(express.json());
-  // parse forms
-  app.use(express.urlencoded({ extended: true }));
-
   app.use(loggerMiddleware);
   app.use(appRouter);
   app.use(errorMiddleware);
