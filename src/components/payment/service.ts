@@ -13,7 +13,12 @@ class PaymentService {
     this.repository = injectedRepository ?? paymentRepository;
   }
 
-  initiatePayment = async ({
+  // flow for the transaction:
+  // 1. find the ticket, set its status to RESERVED
+  // 2. create a payment in the table (with status PENDING)
+  // 3. create a stripe payment intent which contains the ticket and payment ids in metadata
+  // 4. return the payment intent to the client
+  initiatePaymentTransaction = async ({
     userId,
     ticketId,
   }: {
