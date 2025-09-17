@@ -1,5 +1,5 @@
 import { IsEmail, IsPhoneNumber } from 'class-validator';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Ticket } from '../ticket/entity';
 import { Payment } from '../payment/entity';
 

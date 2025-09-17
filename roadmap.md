@@ -34,6 +34,7 @@ Entities I'll be adding to the application:
 
 - `POST /API/payments/initiate` -> (transaction) initiate payment - create payment with status pending, set ticket status to RESERVED.
 - `POST /API/payments/stripe-webhook` -> (2x transaction handlers for succeeded / failed payment intents for tickets)
+- `POST /API/user` -> User
 - `GET /API/user/me` -> User
 - `GET /API/user/${id}` -> User
 

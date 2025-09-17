@@ -1,4 +1,4 @@
-import { FindOptionsWhere, Repository } from 'typeorm';
+import { DeepPartial, FindOptionsWhere, Repository } from 'typeorm';
 import { User } from './entity';
 import { userRepository } from './repository';
 
@@ -12,12 +12,7 @@ class UserService {
     return this.repository.findOne({ where });
   };
 
-  createUser = async (data: {
-    first_name: string;
-    last_name: string;
-    email: string;
-    phone_number?: string;
-  }) => {
+  createUser = async (data: DeepPartial<User>) => {
     const user = this.repository.create(data);
     await this.repository.save(user);
     return user;

@@ -2,8 +2,19 @@ import { NextFunction, Request, Response } from 'express';
 import { userService } from './service';
 import { AppError } from '@/middlewares/error';
 
+interface ICreateUserRequestBody {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number?: string | undefined;
+}
+
 class UserController {
-  createUser = async (req: Request, res: Response, next: NextFunction) => {
+  createUser = async (
+    req: Request<{}, {}, ICreateUserRequestBody>,
+    res: Response,
+    next: NextFunction,
+  ) => {
     try {
       const user = await userService.createUser(req.body);
       return res.status(200).json(user);
@@ -23,7 +34,7 @@ class UserController {
       next(err);
     }
   };
-  findUserById = async (req: Request, res: Response, next: NextFunction) => {
+  findUserById = async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
     try {
       const id = parseInt(req.params.id);
       const user = await userService.findOne({ where: { id } });

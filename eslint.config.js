@@ -32,6 +32,7 @@ export default defineConfig([
           groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
         },
       ],
+      '@typescript-eslint/no-empty-object-type': 'off',
     },
   },
 
