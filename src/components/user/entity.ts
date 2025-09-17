@@ -1,5 +1,5 @@
 import { IsEmail, IsPhoneNumber } from 'class-validator';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { Ticket } from '../ticket/entity';
 import { Payment } from '../payment/entity';
 
@@ -14,13 +14,13 @@ export class User {
   @Column({ type: 'varchar' })
   last_name: string;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', unique: true })
   @IsEmail()
   email: string;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'varchar', nullable: true, unique: true })
   @IsPhoneNumber()
-  phoneNumber: string | null;
+  phone_number: string | null;
 
   @OneToMany(() => Ticket, ticket => ticket.user)
   tickets: Ticket[];
