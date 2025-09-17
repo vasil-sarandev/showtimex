@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import { paymentService } from './service';
-import { appStripeInstance } from '@/lib/stripe';
+import {
+  STRIPE_EVENT_PAYMENT_CANCELED,
+  STRIPE_EVENT_PAYMENT_FAILED,
+  STRIPE_EVENT_PAYMENT_SUCCEEDED,
+  STRIPE_SIGNATURE_HEADER,
+  stripeService,
+} from '@/lib/stripe';
 import { APP_STRIPE_PAYMENTS_WEBHOOK_SECRET_KEY } from '@/config';
 import { AppError } from '@/middlewares/error';
-
-const STRIPE_SIGNATURE_HEADER = 'stripe-signature';
-const STRIPE_EVENT_PAYMENT_SUCCEEDED = 'payment_intent.succeeded';
-const STRIPE_EVENT_PAYMENT_CANCELED = 'payment_intent.canceled';
-const STRIPE_EVENT_PAYMENT_FAILED = 'payment_intent.payment_failed';
 
 class PaymentController {
   initiatePayment = async (req: Request, res: Response, next: NextFunction) => {
@@ -24,12 +25,12 @@ class PaymentController {
   };
   stripeWebhookHandler = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const sig = req.headers[STRIPE_SIGNATURE_HEADER] as string;
-      const event = appStripeInstance.webhooks.constructEvent(
-        req.body,
-        sig,
-        APP_STRIPE_PAYMENTS_WEBHOOK_SECRET_KEY,
-      );
+      const event = stripeService.verifyWebhookSignature({
+        signature: req.headers[STRIPE_SIGNATURE_HEADER] as string,
+        body: req.body,
+        webhookSecret: APP_STRIPE_PAYMENTS_WEBHOOK_SECRET_KEY,
+      });
+
       if (event.type === STRIPE_EVENT_PAYMENT_SUCCEEDED) {
         await paymentService.handlePaymentSuccessTransaction({
           event,
