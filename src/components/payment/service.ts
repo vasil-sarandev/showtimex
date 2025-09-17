@@ -10,7 +10,7 @@ import { appDataSource } from '@/lib/typeorm';
 type ITicketPaymentMetadata = IPaymentIntentMetadata<{ paymentId: string; ticketId: string }>;
 
 class PaymentService {
-  repository: Repository<Payment>;
+  private repository: Repository<Payment>;
   constructor(injectedRepository?: Repository<Payment>) {
     this.repository = injectedRepository ?? paymentRepository;
   }

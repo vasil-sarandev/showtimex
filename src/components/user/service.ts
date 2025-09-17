@@ -3,7 +3,7 @@ import { User } from './entity';
 import { userRepository } from './repository';
 
 class UserService {
-  repository: Repository<User>;
+  private repository: Repository<User>;
   constructor(injectedRepository?: Repository<User>) {
     this.repository = injectedRepository ?? userRepository;
   }
