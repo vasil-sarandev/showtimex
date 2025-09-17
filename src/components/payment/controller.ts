@@ -11,7 +11,11 @@ import { APP_STRIPE_PAYMENTS_WEBHOOK_SECRET_KEY } from '@/config';
 import { AppError } from '@/middlewares/error';
 
 class PaymentController {
-  initiatePayment = async (req: Request, res: Response, next: NextFunction) => {
+  initiatePayment = async (
+    req: Request<{}, {}, { ticketId: number }>,
+    res: Response,
+    next: NextFunction,
+  ) => {
     try {
       const userId = parseInt(req.user!.sub as string);
       const intent = await paymentService.initiatePaymentTransaction({
