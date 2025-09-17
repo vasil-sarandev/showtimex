@@ -4,8 +4,10 @@ import { Ticket, TicketStatus } from '../ticket/entity';
 import { Payment, PaymentStatus } from './entity';
 import { paymentRepository } from './repository';
 import { AppError } from '@/middlewares/error';
-import { appStripeInstance, IStripeTicketPaymentIntentMetadata } from '@/lib/stripe';
+import { IPaymentIntentMetadata, stripeService } from '@/lib/stripe';
 import { appDataSource } from '@/lib/typeorm';
+
+type ITicketPaymentMetadata = IPaymentIntentMetadata<{ paymentId: string; ticketId: string }>;
 
 class PaymentService {
   repository: Repository<Payment>;
@@ -24,7 +26,7 @@ class PaymentService {
     // 1. find the ticket, set its status to RESERVED
     // 2. create a payment in the table (with status PENDING)
     // 3. create a stripe payment intent which contains the ticket and payment ids in metadata
-    // 4. return the payment intent to the client
+    // 4. return the payment intent to the controller
     return appDataSource.transaction(async manager => {
       const ticket = await manager.findOneByOrFail(Ticket, { id: ticketId });
       if (ticket.status !== TicketStatus.available) {
@@ -36,17 +38,15 @@ class PaymentService {
       const payment = manager.create(Payment, { ticket, user: { id: userId } });
       await manager.save(payment);
 
-      const metadata: IStripeTicketPaymentIntentMetadata = {
+      const metadata: ITicketPaymentMetadata = {
         paymentId: payment.id.toString(),
         ticketId: ticket.id.toString(),
       };
-      const paymentIntent = await appStripeInstance.paymentIntents.create({
-        amount: Math.round(ticket.price * 100),
-        currency: 'usd',
+
+      return stripeService.createPaymentIntent({
+        price: ticket.price,
         metadata,
-        automatic_payment_methods: { enabled: true }, // allows card, wallet, etc.
       });
-      return paymentIntent;
     });
   };
 
