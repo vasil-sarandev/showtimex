@@ -11,6 +11,17 @@ class UserService {
   findOne = async ({ where }: { where?: FindOptionsWhere<User> }) => {
     return this.repository.findOne({ where });
   };
+
+  createUser = async (data: {
+    first_name: string;
+    last_name: string;
+    email: string;
+    phone_number?: string;
+  }) => {
+    const user = this.repository.create(data);
+    await this.repository.save(user);
+    return user;
+  };
 }
 
 export const userService = new UserService();
