@@ -1,0 +1,1 @@
+ALTER SYSTEM SET DateStyle = 'ISO, YMD';

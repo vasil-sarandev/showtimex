@@ -27,6 +27,9 @@ export class Event {
   @Column({ type: 'varchar', nullable: true })
   description: string | null;
 
+  @Column({ type: 'date' })
+  date: string;
+
   @OneToMany(() => Ticket, ticket => ticket.event)
   tickets: Ticket[];
 
