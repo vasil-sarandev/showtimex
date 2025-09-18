@@ -24,9 +24,12 @@ Entities I'll be adding to the application:
 - `POST /API/event` -> Event
 - `GET /API/event/$id` -> Event
 - `GET /API/event/search?term={term}&location={location}&date={date}&venue={venue}` -> Event[] or Partial<Event>[]
+- `POST /API/ticket/batch` -> Tickets[]
 - `GET /API/ticket/$id` -> Ticket
 - `GET /API/ticket/search?status={status}&eventId={eventId}` -> Ticket[] or Partial<Ticket>[]
+- `POST /API/performer` -> Performer
 - `GET /API/performer/${id}` -> Performer
+- `POST /API/venue` -> Venue
 - `GET /API/venue/${id}` -> Venue
 - `GET /API/bffs/event-page/${id}` (Backend for Frontend Service) -> Event, Venue, Performer
 
