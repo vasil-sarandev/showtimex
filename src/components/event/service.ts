@@ -26,7 +26,6 @@ class EventService {
 
   search = async ({ term, venueId, date, limit, page }: IEventSearchParams) => {
     const qb = this.repository.createQueryBuilder('event');
-    // add conditional where clause queries
     if (venueId) {
       qb.andWhere('event.venueId = :venueId', { venueId: parseInt(venueId, 10) });
     }
@@ -38,10 +37,10 @@ class EventService {
         term: `%${term}%`,
       });
     }
-    // pagination
-    qb.skip((parseInt(page) - 1) * parseInt(limit)).take(parseInt(limit));
-    //query
-    return qb.getManyAndCount();
+    return qb
+      .skip((parseInt(page) - 1) * parseInt(limit))
+      .take(parseInt(limit))
+      .getManyAndCount();
   };
 }
 
