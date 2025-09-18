@@ -3,7 +3,7 @@ import { Event } from './entity';
 import { eventRepository } from './repository';
 import { IPaginationParams } from '@/lib/common';
 
-interface ISearchParams extends IPaginationParams {
+export interface IEventSearchParams extends IPaginationParams {
   term?: string;
   venueId?: string;
   date?: string;
@@ -24,7 +24,7 @@ class EventService {
     return this.repository.findOne(options);
   };
 
-  search = async ({ term, venueId, date, limit, page }: ISearchParams) => {
+  search = async ({ term, venueId, date, limit, page }: IEventSearchParams) => {
     const qb = this.repository.createQueryBuilder('event');
     // add conditional where clause queries
     if (venueId) {
