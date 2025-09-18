@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+import Stripe from 'stripe';
 import { paymentService } from './service';
 import {
   STRIPE_EVENT_PAYMENT_CANCELED,
@@ -13,7 +14,7 @@ import { AppError } from '@/middlewares/error';
 class PaymentController {
   initiatePayment = async (
     req: Request<{}, {}, { ticketId: number }>,
-    res: Response,
+    res: Response<Stripe.PaymentIntent>,
     next: NextFunction,
   ) => {
     try {

@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { userService } from './service';
+import { User } from './entity';
 import { AppError } from '@/middlewares/error';
 
 interface ICreateUserRequestBody {
@@ -12,7 +13,7 @@ interface ICreateUserRequestBody {
 class UserController {
   createUser = async (
     req: Request<{}, {}, ICreateUserRequestBody>,
-    res: Response,
+    res: Response<User>,
     next: NextFunction,
   ) => {
     try {
@@ -22,7 +23,7 @@ class UserController {
       next(err);
     }
   };
-  getCurrentUser = async (req: Request, res: Response, next: NextFunction) => {
+  getCurrentUser = async (req: Request, res: Response<User>, next: NextFunction) => {
     try {
       const id = parseInt(req.user!.sub as string);
       const user = await userService.findOne({ where: { id } });
@@ -34,7 +35,7 @@ class UserController {
       next(err);
     }
   };
-  findUserById = async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {
+  findUserById = async (req: Request<{ id: string }>, res: Response<User>, next: NextFunction) => {
     try {
       const id = parseInt(req.params.id);
       const user = await userService.findOne({ where: { id } });

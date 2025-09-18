@@ -21,9 +21,7 @@ Entities I'll be adding to the application:
 
 ## API
 
-- `POST /API/event` -> Event
-- `GET /API/event/$id` -> Event
-- `GET /API/event/search?term={term}&location={location}&date={date}&venue={venue}` -> Event[] or Partial<Event>[]
+- `GET /API/event/search?term={term}&date={date}&venueId={venueId}` -> Event[] or Partial<Event>[]
 - `POST /API/ticket/batch` -> Tickets[]
 - `GET /API/ticket/$id` -> Ticket
 - `GET /API/ticket/search?status={status}&eventId={eventId}` -> Ticket[] or Partial<Ticket>[]
@@ -40,6 +38,8 @@ Entities I'll be adding to the application:
 - `POST /API/user` -> User
 - `GET /API/user/me` -> User
 - `GET /API/user/${id}` -> User
+- `POST /API/event` -> Event
+- `GET /API/event/$id` -> Event
 
 ## Misc
 
