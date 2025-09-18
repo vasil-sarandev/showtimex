@@ -1,15 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { DeepPartial } from 'typeorm';
 import { Event } from './entity';
-import { eventService } from './service';
+import { eventService, IEventSearchParams } from './service';
 import { AppError } from '@/middlewares/error';
-import { IPaginatedEndpointResponse, IPaginationParams } from '@/lib/common';
-
-export interface ISearchEventParams extends IPaginationParams {
-  term?: string;
-  date?: string;
-  venueId?: string;
-}
+import { IPaginatedEndpointResponse } from '@/lib/common';
 
 class EventController {
   constructor() {}
@@ -40,19 +34,12 @@ class EventController {
   };
 
   searchEventsPaginated = async (
-    req: Request<{}, {}, {}, ISearchEventParams>,
+    req: Request<{}, {}, {}, IEventSearchParams>,
     res: Response<IPaginatedEndpointResponse<Event>>,
     next: NextFunction,
   ) => {
     try {
-      const { term, date, venueId, page, limit } = req.query;
-      const [data, totalCount] = await eventService.search({
-        term,
-        date,
-        venueId,
-        page,
-        limit,
-      });
+      const [data, totalCount] = await eventService.search(req.query);
       res.status(200).json({ data, totalCount });
     } catch (err) {
       next(err);
