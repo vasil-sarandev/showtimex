@@ -17,7 +17,7 @@ class UserController {
     next: NextFunction,
   ) => {
     try {
-      const user = await userService.createUser(req.body);
+      const user = await userService.create(req.body);
       return res.status(200).json(user);
     } catch (err) {
       next(err);

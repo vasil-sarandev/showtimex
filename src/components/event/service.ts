@@ -15,7 +15,7 @@ class EventService {
     this.repository = eventRepository;
   }
 
-  createEvent = async (data: DeepPartial<Event>) => {
+  create = async (data: DeepPartial<Event>) => {
     const event = this.repository.create(data);
     return this.repository.save(event);
   };

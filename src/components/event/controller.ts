@@ -14,7 +14,7 @@ class EventController {
     next: NextFunction,
   ) => {
     try {
-      const event = await eventService.createEvent(req.body);
+      const event = await eventService.create(req.body);
       return res.status(200).json(event);
     } catch (err) {
       next(err);
