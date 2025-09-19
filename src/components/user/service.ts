@@ -12,7 +12,7 @@ class UserService {
     return this.repository.findOne({ where });
   };
 
-  createUser = async (data: DeepPartial<User>) => {
+  create = async (data: DeepPartial<User>) => {
     const user = this.repository.create(data);
     await this.repository.save(user);
     return user;
