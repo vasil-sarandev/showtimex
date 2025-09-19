@@ -1,13 +1,13 @@
 import { Repository } from 'typeorm';
 import Stripe from 'stripe';
-import { Ticket, TicketStatus } from '../ticket/entity';
-import { Payment, PaymentStatus } from './entity';
-import { paymentRepository } from './repository';
+import { Ticket, TicketStatus } from '../ticket/ticket.entity';
+import { Payment, PaymentStatus } from './payment.entity';
+import { paymentRepository } from './payment.repository';
 import { AppError } from '@/middlewares/error';
-import { IPaymentIntentMetadata, stripeService } from '@/lib/stripe';
-import { appDataSource } from '@/lib/typeorm';
+import { PaymentIntentMetadata, stripeService } from '@/lib/services/stripe';
+import { appDataSource } from '@/lib/services/typeorm';
 
-type ITicketPaymentMetadata = IPaymentIntentMetadata<{ paymentId: string; ticketId: string }>;
+type TicketPaymentMetaData = PaymentIntentMetadata<{ paymentId: string; ticketId: string }>;
 
 class PaymentService {
   private repository: Repository<Payment>;
@@ -38,7 +38,7 @@ class PaymentService {
       const payment = manager.create(Payment, { ticket, user: { id: userId } });
       await manager.save(payment);
 
-      const metadata: ITicketPaymentMetadata = {
+      const metadata: TicketPaymentMetaData = {
         paymentId: payment.id.toString(),
         ticketId: ticket.id.toString(),
       };
@@ -69,6 +69,7 @@ class PaymentService {
       await manager.save(payment);
     });
   };
+
   handlePaymentFailedTransaction = async ({
     event,
   }: {

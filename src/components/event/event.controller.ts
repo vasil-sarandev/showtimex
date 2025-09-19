@@ -1,27 +1,33 @@
 import { Request, Response, NextFunction } from 'express';
-import { DeepPartial } from 'typeorm';
-import { Event } from './entity';
-import { eventService, IEventSearchParams } from './service';
+import { Event } from './event.entity';
+import { eventService } from './event.service';
+import { CreateEventDTO, EventSearchParams } from './event.dto';
 import { AppError } from '@/middlewares/error';
-import { IPaginatedEndpointResponse } from '@/lib/common';
+import { PaginatedEndpointResponse } from '@/lib/util';
 
 class EventController {
   constructor() {}
 
-  createEvent = async (
-    req: Request<{}, DeepPartial<Event>>,
+  create = async (
+    req: Request<{}, {}, CreateEventDTO>,
     res: Response<Event>,
     next: NextFunction,
   ) => {
     try {
-      const event = await eventService.create(req.body);
-      return res.status(200).json(event);
+      const { title, description, venueId, performerIds } = req.body;
+      const event = await eventService.create({
+        title,
+        description,
+        venue: { id: venueId },
+        performers: performerIds.map(p => ({ id: p })),
+      });
+      res.status(201).json(event);
     } catch (err) {
       next(err);
     }
   };
 
-  getEventById = async (req: Request<{ id: string }>, res: Response<Event>, next: NextFunction) => {
+  getById = async (req: Request<{ id: string }>, res: Response<Event>, next: NextFunction) => {
     try {
       const event = await eventService.findOne({ where: { id: parseInt(req.params.id) } });
       if (event) {
@@ -33,9 +39,9 @@ class EventController {
     }
   };
 
-  searchEventsPaginated = async (
-    req: Request<{}, {}, {}, IEventSearchParams>,
-    res: Response<IPaginatedEndpointResponse<Event>>,
+  search = async (
+    req: Request<{}, {}, {}, EventSearchParams>,
+    res: Response<PaginatedEndpointResponse<Event>>,
     next: NextFunction,
   ) => {
     try {

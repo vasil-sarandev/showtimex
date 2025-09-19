@@ -1,6 +1,6 @@
 import { DeepPartial, FindOptionsWhere, Repository } from 'typeorm';
-import { User } from './entity';
-import { userRepository } from './repository';
+import { User } from './user.entity';
+import { userRepository } from './user.repository';
 
 class UserService {
   private repository: Repository<User>;

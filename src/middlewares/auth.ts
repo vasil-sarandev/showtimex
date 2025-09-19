@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { MoreThanOrEqual } from 'typeorm';
 import { AppError } from './error';
-import { userService } from '@/components/user/service';
+import { userService } from '@/components/user/user.service';
 import { APP_MOCK_AUTH } from '@/config';
 
 const JWT_SECRET = process.env.JWT_SECRET as string;

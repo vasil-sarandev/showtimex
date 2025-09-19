@@ -1,13 +1,7 @@
 import { DeepPartial, FindOneOptions, Repository } from 'typeorm';
-import { Event } from './entity';
-import { eventRepository } from './repository';
-import { IPaginationParams } from '@/lib/common';
-
-export interface IEventSearchParams extends IPaginationParams {
-  term?: string;
-  venueId?: string;
-  date?: string;
-}
+import { Event } from './event.entity';
+import { eventRepository } from './event.repository';
+import { EventSearchParams } from './event.dto';
 
 class EventService {
   private repository: Repository<Event>;
@@ -24,7 +18,7 @@ class EventService {
     return this.repository.findOne(options);
   };
 
-  search = async ({ term, venueId, date, limit, page }: IEventSearchParams) => {
+  search = async ({ term, venueId, date, limit, page }: EventSearchParams) => {
     const qb = this.repository.createQueryBuilder('event');
     if (venueId) {
       qb.andWhere('event.venueId = :venueId', { venueId: parseInt(venueId, 10) });

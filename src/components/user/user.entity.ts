@@ -1,7 +1,7 @@
 import { IsEmail, IsPhoneNumber } from 'class-validator';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Ticket } from '../ticket/entity';
-import { Payment } from '../payment/entity';
+import { Ticket } from '../ticket/ticket.entity';
+import { Payment } from '../payment/payment.entity';
 
 @Entity()
 export class User {
