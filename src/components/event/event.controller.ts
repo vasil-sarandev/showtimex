@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { Event } from './event.entity';
 import { eventService } from './event.service';
 import { CreateEventDTO, EventSearchParams } from './event.dto';
-import { AppError } from '@/middlewares/error';
+import { AppError } from '@/middlewares/error.middleware';
 import { PaginatedEndpointResponse } from '@/lib/util';
 
 class EventController {
