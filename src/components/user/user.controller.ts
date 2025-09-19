@@ -1,21 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
-import { userService } from './service';
-import { User } from './entity';
+import { userService } from './user.service';
+import { User } from './user.entity';
+import { CreateUserDTO } from './user.dto';
 import { AppError } from '@/middlewares/error';
 
-interface ICreateUserRequestBody {
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone_number?: string | undefined;
-}
-
 class UserController {
-  createUser = async (
-    req: Request<{}, {}, ICreateUserRequestBody>,
-    res: Response<User>,
-    next: NextFunction,
-  ) => {
+  create = async (req: Request<{}, {}, CreateUserDTO>, res: Response<User>, next: NextFunction) => {
     try {
       const user = await userService.create(req.body);
       return res.status(200).json(user);
@@ -35,7 +25,7 @@ class UserController {
       next(err);
     }
   };
-  findUserById = async (req: Request<{ id: string }>, res: Response<User>, next: NextFunction) => {
+  findById = async (req: Request<{ id: string }>, res: Response<User>, next: NextFunction) => {
     try {
       const id = parseInt(req.params.id);
       const user = await userService.findOne({ where: { id } });

@@ -1,8 +1,9 @@
-import { IsUrl, Length, Min } from 'class-validator';
+import { IsUrl, Length, Max, Min } from 'class-validator';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Event } from '../event/entity';
+import { Event } from '../event/event.entity';
 
-const MIN_CAPACITY = 500;
+const MIN_CAPACITY = 10;
+const MAX_CAPACITY = 10000;
 
 @Entity()
 export class Venue {
@@ -15,6 +16,7 @@ export class Venue {
 
   @Column({ type: 'int' })
   @Min(MIN_CAPACITY)
+  @Max(MAX_CAPACITY)
   capacity: number;
 
   @Column({ type: 'varchar', nullable: true })

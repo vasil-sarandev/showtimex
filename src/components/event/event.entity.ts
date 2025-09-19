@@ -8,9 +8,9 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Length } from 'class-validator';
-import { Ticket } from '../ticket/entity';
-import { Performer } from '../performer/entity';
-import { Venue } from '../venue/entity';
+import { Ticket } from '../ticket/ticket.entity';
+import { Performer } from '../performer/performer.entity';
+import { Venue } from '../venue/venue.entity';
 
 const TITLE_MIN_LEN = 10;
 const TITLE_MAX_LEN = 100;

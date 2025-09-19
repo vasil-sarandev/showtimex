@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import bodyParser from 'body-parser';
-import { paymentController } from './controller';
+import { paymentController } from './payment.controller';
 import { authMiddleware } from '@/middlewares/auth';
 
 export const paymentRouter = Router();

@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, OneToOne, ManyToOne, Column, JoinColumn } from 'typeorm';
-import { Ticket } from '../ticket/entity';
-import { User } from '../user/entity';
+import { Ticket } from '../ticket/ticket.entity';
+import { User } from '../user/user.entity';
 
 export enum PaymentStatus {
   pending = 'PENDING',

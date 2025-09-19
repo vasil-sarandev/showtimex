@@ -1,7 +1,7 @@
 import Stripe from 'stripe';
 import { APP_STRIPE_API_KEY } from '@/config';
 
-export type IPaymentIntentMetadata<T> = T & {
+export type PaymentIntentMetadata<T> = T & {
   [key: string]: string;
 };
 
@@ -35,7 +35,7 @@ class StripeService {
     currency = 'usd',
   }: {
     price: number;
-    metadata: IPaymentIntentMetadata<object>;
+    metadata: PaymentIntentMetadata<{}>;
     automaticPaymentsMethodEnabled?: boolean;
     currency?: string;
   }) => {

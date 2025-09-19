@@ -1,19 +1,20 @@
 import { NextFunction, Request, Response } from 'express';
 import Stripe from 'stripe';
-import { paymentService } from './service';
+import { paymentService } from './payment.service';
+import { InitiatePaymentDTO } from './payment.dto';
 import {
   STRIPE_EVENT_PAYMENT_CANCELED,
   STRIPE_EVENT_PAYMENT_FAILED,
   STRIPE_EVENT_PAYMENT_SUCCEEDED,
   STRIPE_SIGNATURE_HEADER,
   stripeService,
-} from '@/lib/stripe';
+} from '@/lib/services/stripe';
 import { APP_STRIPE_PAYMENTS_WEBHOOK_SECRET_KEY } from '@/config';
 import { AppError } from '@/middlewares/error';
 
 class PaymentController {
   initiatePayment = async (
-    req: Request<{}, {}, { ticketId: number }>,
+    req: Request<{}, {}, InitiatePaymentDTO>,
     res: Response<Stripe.PaymentIntent>,
     next: NextFunction,
   ) => {
