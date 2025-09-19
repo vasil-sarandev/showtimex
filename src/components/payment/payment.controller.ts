@@ -8,7 +8,7 @@ import {
   STRIPE_EVENT_PAYMENT_SUCCEEDED,
   STRIPE_SIGNATURE_HEADER,
   stripeService,
-} from '@/lib/services/stripe';
+} from '@/lib/stripe/stripe.index';
 import { APP_STRIPE_PAYMENTS_WEBHOOK_SECRET_KEY } from '@/config';
 import { AppError } from '@/middlewares/error';
 

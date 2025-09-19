@@ -1,4 +1,4 @@
-import { initializeTypeORM } from './services/typeorm';
+import { initializeTypeORM } from './lib/typeorm/typeorm.index';
 
 export const setupApp = async (createServerCallback: () => void) => {
   try {

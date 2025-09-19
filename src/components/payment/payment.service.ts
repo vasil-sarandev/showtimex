@@ -4,8 +4,8 @@ import { Ticket, TicketStatus } from '../ticket/ticket.entity';
 import { Payment, PaymentStatus } from './payment.entity';
 import { paymentRepository } from './payment.repository';
 import { AppError } from '@/middlewares/error';
-import { PaymentIntentMetadata, stripeService } from '@/lib/services/stripe';
-import { appDataSource } from '@/lib/services/typeorm';
+import { PaymentIntentMetadata, stripeService } from '@/lib/stripe/stripe.index';
+import { appDataSource } from '@/lib/typeorm/typeorm.index';
 
 type TicketPaymentMetaData = PaymentIntentMetadata<{ paymentId: string; ticketId: string }>;
 
