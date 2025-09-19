@@ -3,7 +3,7 @@ import Stripe from 'stripe';
 import { Ticket, TicketStatus } from '../ticket/ticket.entity';
 import { Payment, PaymentStatus } from './payment.entity';
 import { paymentRepository } from './payment.repository';
-import { AppError } from '@/middlewares/error';
+import { AppError } from '@/middlewares/error.middleware';
 import { PaymentIntentMetadata, stripeService } from '@/lib/stripe/stripe.index';
 import { appDataSource } from '@/lib/typeorm/typeorm.index';
 

@@ -3,8 +3,8 @@ import express from 'express';
 import { setupApp } from './setup-app';
 import { APP_PORT } from './config';
 import { appRouter } from '@/components/app-router';
-import { errorMiddleware } from '@/middlewares/error';
-import { loggerMiddleware } from '@/middlewares/logger';
+import { errorMiddleware } from '@/middlewares/error.middleware';
+import { loggerMiddleware } from '@/middlewares/logger.middleware';
 
 const createServerCallback = () => {
   const app = express();

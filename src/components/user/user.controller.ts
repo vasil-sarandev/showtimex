@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import { userService } from './user.service';
 import { User } from './user.entity';
 import { CreateUserDTO } from './user.dto';
-import { AppError } from '@/middlewares/error';
+import { AppError } from '@/middlewares/error.middleware';
 
 class UserController {
   create = async (req: Request<{}, {}, CreateUserDTO>, res: Response<User>, next: NextFunction) => {

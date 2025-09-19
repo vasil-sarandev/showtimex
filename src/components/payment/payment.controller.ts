@@ -10,7 +10,7 @@ import {
   stripeService,
 } from '@/lib/stripe/stripe.index';
 import { APP_STRIPE_PAYMENTS_WEBHOOK_SECRET_KEY } from '@/config';
-import { AppError } from '@/middlewares/error';
+import { AppError } from '@/middlewares/error.middleware';
 
 class PaymentController {
   initiatePayment = async (
