@@ -46,3 +46,4 @@ Entities I'll be adding to the application:
 - Database seeds
 - Migrations
 - Swagger
+- README
