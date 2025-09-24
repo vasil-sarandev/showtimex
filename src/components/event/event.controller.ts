@@ -3,7 +3,7 @@ import { Event } from './event.entity';
 import { eventService } from './event.service';
 import { CreateEventDTO, EventSearchParams } from './event.dto';
 import { AppError } from '@/middlewares/error.middleware';
-import { PaginatedEndpointResponse } from '@/lib/util';
+import { PaginatedEndpointResponse } from '@/lib/shared';
 
 class EventController {
   constructor() {}

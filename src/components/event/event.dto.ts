@@ -1,4 +1,4 @@
-import { PaginationParams } from '@/lib/util';
+import { PaginationParams } from '@/lib/shared';
 
 export interface CreateEventDTO {
   title: string;
