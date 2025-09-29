@@ -3,4 +3,5 @@ export interface CreateEventDTO {
   description?: string;
   venueId: number;
   performerIds: number[];
+  date: string;
 }

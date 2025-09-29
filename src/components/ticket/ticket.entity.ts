@@ -1,4 +1,12 @@
-import { Check, Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Check,
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Length } from 'class-validator';
 import { Event } from '../event/event.entity';
 import { User } from '../user/user.entity';
@@ -39,11 +47,22 @@ export class Ticket {
   @Length(SEAT_MIN_LEN, SEAT_MAX_LEN)
   seat: string;
 
+  // Event - ManyToOne
   @ManyToOne(() => Event, event => event.tickets)
+  @JoinColumn({ name: 'eventId' })
   event: Event;
 
+  @Column({ type: 'int' })
+  eventId: string; // expose FK
+  // ---
+
+  // User - ManyToOne
   @ManyToOne(() => User, user => user.tickets, { nullable: true })
   user: User;
+
+  @Column({ type: 'int' })
+  userId: number; //expose FK
+  // ---
 
   @OneToOne(() => Payment, payment => payment.ticket)
   payment: Payment;

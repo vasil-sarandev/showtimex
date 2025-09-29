@@ -28,6 +28,8 @@ export class Venue {
   @IsUrl()
   google_maps_url: string | null;
 
+  // Event - OneToMany
   @OneToMany(() => Event, event => event.venue)
   events: Event[];
+  // ---
 }

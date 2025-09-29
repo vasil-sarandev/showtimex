@@ -20,10 +20,11 @@ class EventController {
     next: NextFunction,
   ) => {
     try {
-      const { title, description, venueId, performerIds } = req.body;
+      const { title, description, venueId, performerIds, date } = req.body;
       const event = await eventService.create({
         title,
         description,
+        date,
         venue: { id: venueId },
         performers: performerIds.map(p => ({ id: p })),
       });

@@ -24,9 +24,13 @@ export class User {
   @IsPhoneNumber()
   phone_number: string | null;
 
+  // Ticket - OneToMany
   @OneToMany(() => Ticket, ticket => ticket.user)
   tickets: Ticket[];
+  // ---
 
+  // Payment - OneToMany
   @OneToMany(() => Payment, payment => payment.user)
   payments: Payment[];
+  // ---
 }

@@ -2,6 +2,7 @@ import {
   Check,
   Column,
   Entity,
+  JoinColumn,
   JoinTable,
   ManyToMany,
   ManyToOne,
@@ -32,13 +33,23 @@ export class Event {
   @Column({ type: 'date' })
   date: string;
 
+  // Ticket (OneToMany)
   @OneToMany(() => Ticket, ticket => ticket.event)
   tickets: Ticket[];
+  // ---
 
+  // Venue (ManyToOne)
   @ManyToOne(() => Venue, venue => venue.events)
+  @JoinColumn({ name: 'venueId' })
   venue: Venue;
 
+  @Column({ type: 'int' })
+  venueId: number; // expose FK
+  // ---
+
+  // Performer (ManyToMany)
   @ManyToMany(() => Performer, performer => performer.events)
   @JoinTable()
   performers: Performer[];
+  // ---
 }

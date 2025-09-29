@@ -19,10 +19,20 @@ export class Payment {
   @Column({ type: 'varchar', nullable: true })
   stripe_payment_id: string;
 
+  // Ticket - OneToOne
   @OneToOne(() => Ticket, ticket => ticket.payment)
-  @JoinColumn()
+  @JoinColumn({ name: 'ticketId' })
   ticket: Ticket;
 
+  @Column({ type: 'int' })
+  ticketId: number; // expose FK
+  // ---
+
+  // User - ManyToOne
   @ManyToOne(() => User, user => user.payments)
   user: User;
+
+  @Column({ type: 'int' })
+  userId: number;
+  // ---
 }

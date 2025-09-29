@@ -18,6 +18,7 @@ export class Performer {
   @IsUrl()
   social_url: string;
 
+  // Event - ManyToMany
   @ManyToMany(() => Event, event => event.performers)
   events: Event[];
 }
