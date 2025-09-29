@@ -1,9 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 import { Event } from './event.entity';
 import { eventService } from './event.service';
-import { CreateEventDTO, EventSearchParams } from './event.dto';
+import { CreateEventDTO } from './event.dto';
 import { AppError } from '@/middlewares/error.middleware';
-import { PaginatedEndpointResponse } from '@/lib/shared';
+import { PaginatedEndpointResponse, PaginationParams } from '@/lib/shared';
+
+export interface EventSearchParams extends PaginationParams {
+  term?: string;
+  venueId?: string;
+  date?: string;
+}
 
 class EventController {
   constructor() {}

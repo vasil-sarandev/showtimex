@@ -1,7 +1,7 @@
 import { DeepPartial, FindOneOptions, Repository } from 'typeorm';
 import { Event } from './event.entity';
 import { eventRepository } from './event.repository';
-import { EventSearchParams } from './event.dto';
+import { EventSearchParams } from './event.controller';
 
 class EventService {
   private repository: Repository<Event>;
