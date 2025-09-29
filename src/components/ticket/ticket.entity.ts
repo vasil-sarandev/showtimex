@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Check, Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Length } from 'class-validator';
 import { Event } from '../event/event.entity';
 import { User } from '../user/user.entity';
@@ -6,6 +6,10 @@ import { Payment } from '../payment/payment.entity';
 
 const TICKET_PRICE_PRECISION = 10;
 const TICKET_PRICE_SCALE = 2;
+const TYPE_MIN_LEN = 2;
+const TYPE_MAX_LEN = 20;
+const SEAT_MIN_LEN = 1;
+const SEAT_MAX_LEN = 10;
 
 export enum TicketStatus {
   available = 'AVAILABLE',
@@ -15,6 +19,8 @@ export enum TicketStatus {
 }
 
 @Entity()
+@Check(`char_length("type") >= ${TYPE_MIN_LEN} AND char_length("type") <= ${TYPE_MAX_LEN}`)
+@Check(`char_length("seat") >= ${SEAT_MIN_LEN} AND char_length("type") <= ${SEAT_MAX_LEN}`)
 export class Ticket {
   @PrimaryGeneratedColumn({ type: 'int' })
   id: number;
@@ -26,11 +32,11 @@ export class Ticket {
   status: TicketStatus;
 
   @Column({ type: 'varchar', default: 'Regular', nullable: true })
-  @Length(2, 20)
+  @Length(TYPE_MIN_LEN, TYPE_MAX_LEN)
   type: string;
 
   @Column({ type: 'varchar', unique: true })
-  @Length(1, 10)
+  @Length(SEAT_MIN_LEN, SEAT_MAX_LEN)
   seat: string;
 
   @ManyToOne(() => Event, event => event.tickets)

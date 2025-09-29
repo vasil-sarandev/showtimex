@@ -1,4 +1,5 @@
 import {
+  Check,
   Column,
   Entity,
   JoinTable,
@@ -16,6 +17,7 @@ const TITLE_MIN_LEN = 10;
 const TITLE_MAX_LEN = 100;
 
 @Entity()
+@Check(`char_length("title") >= ${TITLE_MIN_LEN} AND char_length("title") <= ${TITLE_MAX_LEN}`)
 export class Event {
   @PrimaryGeneratedColumn({ type: 'int' })
   id: number;

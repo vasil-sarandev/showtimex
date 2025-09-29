@@ -1,4 +1,5 @@
 import { DeepPartial, FindOneOptions, Repository } from 'typeorm';
+import { validateOrReject } from 'class-validator';
 import { venueRepository } from './venue.repository';
 import { Venue } from './venue.entity';
 
@@ -10,6 +11,7 @@ class VenueService {
 
   create = async (data: DeepPartial<Venue>) => {
     const event = this.repository.create(data);
+    await validateOrReject(event);
     return this.repository.save(event);
   };
 

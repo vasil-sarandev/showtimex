@@ -22,7 +22,7 @@ class VenueController {
 
   getById = async (req: Request<{ id: string }>, res: Response<Venue>, next: NextFunction) => {
     try {
-      const venue = await venueService.findOne({ where: { capacity: parseInt(req.params.id) } });
+      const venue = await venueService.findOne({ where: { id: parseInt(req.params.id) } });
       if (venue) {
         return res.status(200).json(venue);
       }

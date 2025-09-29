@@ -1,8 +1,12 @@
 import { IsUrl } from 'class-validator';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, Check } from 'typeorm';
 import { Event } from '../event/event.entity';
 
 @Entity()
+@Check(`
+  "social_url" ~ 
+  '^https?:\\/\\/[a-zA-Z0-9.-]+(\\.[a-zA-Z]{2,})(:[0-9]+)?(\\/.*)?$'
+`)
 export class Performer {
   @PrimaryGeneratedColumn({ type: 'int' })
   id: number;

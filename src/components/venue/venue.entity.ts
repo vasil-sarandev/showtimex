@@ -1,16 +1,21 @@
 import { IsUrl, Length, Max, Min } from 'class-validator';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Check, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Event } from '../event/event.entity';
 
 const MIN_CAPACITY = 10;
 const MAX_CAPACITY = 10000;
 
 @Entity()
+@Check(`"capacity" >= ${MIN_CAPACITY} AND "capacity" <= ${MAX_CAPACITY}`)
+@Check(`
+  "google_maps_url" ~ 
+  '^https?:\\/\\/[a-zA-Z0-9.-]+(\\.[a-zA-Z]{2,})(:[0-9]+)?(\\/.*)?$'
+`)
 export class Venue {
   @PrimaryGeneratedColumn({ type: 'int' })
   id: number;
 
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', unique: true })
   @Length(5, 150)
   name: string;
 

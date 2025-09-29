@@ -1,4 +1,5 @@
 import { DeepPartial, FindOptionsWhere, Repository } from 'typeorm';
+import { validateOrReject } from 'class-validator';
 import { User } from './user.entity';
 import { userRepository } from './user.repository';
 
@@ -14,8 +15,8 @@ class UserService {
 
   create = async (data: DeepPartial<User>) => {
     const user = this.repository.create(data);
-    await this.repository.save(user);
-    return user;
+    await validateOrReject(user);
+    return this.repository.save(user);
   };
 }
 
