@@ -1,4 +1,5 @@
 import { Column, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Length } from 'class-validator';
 import { Event } from '../event/event.entity';
 import { User } from '../user/user.entity';
 import { Payment } from '../payment/payment.entity';
@@ -23,6 +24,14 @@ export class Ticket {
 
   @Column({ type: 'enum', enum: TicketStatus, default: TicketStatus.available })
   status: TicketStatus;
+
+  @Column({ type: 'varchar', default: 'Regular', nullable: true })
+  @Length(2, 20)
+  type: string;
+
+  @Column({ type: 'varchar', unique: true })
+  @Length(1, 10)
+  seat: string;
 
   @ManyToOne(() => Event, event => event.tickets)
   event: Event;

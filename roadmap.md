@@ -21,13 +21,13 @@ Entities I'll be adding to the application:
 
 ## API
 
+- `POST /API/venue` -> Venue
+- `GET /API/venue/${id}` -> Venue
 - `POST /API/ticket/batch` -> Tickets[]
 - `GET /API/ticket/$id` -> Ticket
 - `GET /API/ticket/search?status={status}&eventId={eventId}` -> Ticket[] or Partial<Ticket>[]
 - `POST /API/performer` -> Performer
 - `GET /API/performer/${id}` -> Performer
-- `POST /API/venue` -> Venue
-- `GET /API/venue/${id}` -> Venue
 - `GET /API/bffs/event-page/${id}` (Backend for Frontend Service) -> Event, Venue, Performer
 
 (done)
@@ -46,4 +46,5 @@ Entities I'll be adding to the application:
 - Database seeds
 - Migrations
 - Swagger
+- Prometheus & Grafana
 - README
