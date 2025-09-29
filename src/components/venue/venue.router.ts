@@ -1,6 +1,10 @@
-import express from 'express';
+import express, { json } from 'express';
+import { venueController } from './venue.controller';
+import { authMiddleware } from '@/middlewares/auth.middleware';
 
 export const venueRouter = express.Router();
 
-venueRouter.post('/');
-venueRouter.get(':id');
+venueRouter.use(authMiddleware);
+
+venueRouter.post('/', json(), venueController.create);
+venueRouter.get(':id', venueController.getById);
