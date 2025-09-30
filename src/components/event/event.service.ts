@@ -1,8 +1,9 @@
-import { DeepPartial, FindOneOptions, Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 import { validateOrReject } from 'class-validator';
 import { Event } from './event.entity';
 import { eventRepository } from './event.repository';
 import { EventSearchParams } from './event.controller';
+import { CreateEventDTO } from './event.dto';
 
 class EventService {
   private repository: Repository<Event>;
@@ -10,8 +11,14 @@ class EventService {
     this.repository = eventRepository;
   }
 
-  create = async (data: DeepPartial<Event>) => {
-    const event = this.repository.create(data);
+  create = async ({ title, description, date, venueId, performerIds }: CreateEventDTO) => {
+    const event = this.repository.create({
+      title,
+      description,
+      date,
+      venue: { id: venueId },
+      performers: performerIds.map(p => ({ id: p })),
+    });
     await validateOrReject(event);
     return this.repository.save(event);
   };

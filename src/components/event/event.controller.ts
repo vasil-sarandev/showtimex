@@ -20,14 +20,7 @@ class EventController {
     next: NextFunction,
   ) => {
     try {
-      const { title, description, venueId, performerIds, date } = req.body;
-      const event = await eventService.create({
-        title,
-        description,
-        date,
-        venue: { id: venueId },
-        performers: performerIds.map(p => ({ id: p })),
-      });
+      const event = await eventService.create(req.body);
       res.status(201).json(event);
     } catch (err) {
       next(err);
