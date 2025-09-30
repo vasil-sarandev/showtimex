@@ -4,6 +4,7 @@ import { Event } from './event.entity';
 import { eventRepository } from './event.repository';
 import { EventSearchParams } from './event.controller';
 import { CreateEventDTO } from './event.dto';
+import { computePaginationParams } from '@/lib/shared';
 
 class EventService {
   private repository: Repository<Event>;
@@ -27,7 +28,8 @@ class EventService {
     return this.repository.findOne(options);
   };
 
-  search = async ({ term, venueId, date, limit, page }: EventSearchParams) => {
+  search = async ({ term, venueId, date, ...rest }: EventSearchParams) => {
+    const { skip, take } = computePaginationParams({ ...rest });
     const qb = this.repository.createQueryBuilder('event');
     if (venueId) {
       qb.andWhere('event.venueId = :venueId', { venueId: parseInt(venueId, 10) });
@@ -40,10 +42,7 @@ class EventService {
         term: `%${term}%`,
       });
     }
-    return qb
-      .skip((parseInt(page) - 1) * parseInt(limit))
-      .take(parseInt(limit))
-      .getManyAndCount();
+    return qb.skip(skip).take(take).getManyAndCount();
   };
 }
 

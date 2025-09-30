@@ -56,17 +56,18 @@ class PaymentService {
     event: Stripe.PaymentIntentSucceededEvent;
   }) => {
     // flow for the transaction:
-    // 1. find the ticket, set its status to PURCHASED
-    // 2. find the payment, set its status to SUCCESSFUL
+    // 1. find the payment, set its status to SUCCESSFUL
+    // 2. find the ticket, set its status to PURCHASED and assign the ticket to the user.
     const { ticketId, paymentId } = event.data.object.metadata;
     return appDataSource.transaction(async manager => {
-      const ticket = await manager.findOneByOrFail(Ticket, { id: parseInt(ticketId) });
-      ticket.status = TicketStatus.purchased;
-      await manager.save(ticket);
-
       const payment = await manager.findOneByOrFail(Payment, { id: parseInt(paymentId) });
       payment.status = PaymentStatus.successful;
       await manager.save(payment);
+
+      const ticket = await manager.findOneByOrFail(Ticket, { id: parseInt(ticketId) });
+      ticket.status = TicketStatus.purchased;
+      ticket.userId = payment.userId;
+      await manager.save(ticket);
     });
   };
 

@@ -33,7 +33,15 @@ export class Ticket {
   @PrimaryGeneratedColumn({ type: 'int' })
   id: number;
 
-  @Column({ type: 'numeric', precision: TICKET_PRICE_PRECISION, scale: TICKET_PRICE_SCALE })
+  @Column({
+    type: 'numeric',
+    precision: TICKET_PRICE_PRECISION,
+    scale: TICKET_PRICE_SCALE,
+    transformer: {
+      to: (value: number) => value,
+      from: (value: string) => parseFloat(value),
+    },
+  })
   price: number;
 
   @Column({ type: 'enum', enum: TicketStatus, default: TicketStatus.available })
@@ -53,14 +61,14 @@ export class Ticket {
   event: Event;
 
   @Column({ type: 'int' })
-  eventId: string; // expose FK
+  eventId: number; // expose FK
   // ---
 
   // User - ManyToOne
   @ManyToOne(() => User, user => user.tickets, { nullable: true })
   user: User;
 
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: true })
   userId: number; //expose FK
   // ---
 

@@ -14,7 +14,7 @@ class VenueController {
   ) => {
     try {
       const venue = await venueService.create(req.body);
-      res.status(200).json(venue);
+      res.status(201).json(venue);
     } catch (err) {
       next(err);
     }

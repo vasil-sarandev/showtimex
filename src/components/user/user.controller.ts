@@ -8,7 +8,7 @@ class UserController {
   create = async (req: Request<{}, {}, CreateUserDTO>, res: Response<User>, next: NextFunction) => {
     try {
       const user = await userService.create(req.body);
-      return res.status(200).json(user);
+      return res.status(201).json(user);
     } catch (err) {
       next(err);
     }

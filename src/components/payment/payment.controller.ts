@@ -24,7 +24,7 @@ class PaymentController {
         userId,
         ticketId: req.body.ticketId,
       });
-      res.status(200).json(intent);
+      res.status(201).json(intent);
     } catch (err) {
       next(err);
     }
