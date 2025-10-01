@@ -1,4 +1,5 @@
 import { FindOneOptions, FindOptionsWhere, Repository } from 'typeorm';
+import { validateOrReject } from 'class-validator';
 import { Ticket, TicketStatus } from './ticket.entity';
 import { ticketRepository } from './ticket.repository';
 import { CreateTicketBatchDTO } from './ticket.dto';
@@ -6,7 +7,6 @@ import { extractSeatNumberFromTicket, generateSeats } from './ticket.util';
 import { TicketSearchParams } from './ticket.controller';
 import { appDataSource } from '@/lib/typeorm/typeorm.index';
 import { computePaginationParams } from '@/lib/shared';
-import { validateOrReject } from 'class-validator';
 
 class TicketService {
   private repository: Repository<Ticket>;

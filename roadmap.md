@@ -21,8 +21,6 @@ Entities I'll be adding to the application:
 
 ## API
 
-- `POST /API/performer` -> Performer
-- `GET /API/performer/${id}` -> Performer
 - `GET /API/bffs/event-page/${id}` (Backend for Frontend Service) -> Event, Venue, Performer
 
 (done)
@@ -40,6 +38,9 @@ Entities I'll be adding to the application:
 - `POST /API/ticket/batch` -> (transaction) Tickets[]
 - `GET /API/ticket/$id` -> Ticket
 - `GET /API/ticket/search?status={status}&eventId={eventId}` -> Ticket[] or Partial<Ticket>[]
+- `POST /API/performer` -> Performer
+- `GET /API/performer/${id}` -> Performer
+- `GET /API/performer/search` -> Performer[], paginated
 
 ## Misc
 
