@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Event } from './event.entity';
 import { eventService } from './event.service';
-import { CreateEventDTO } from './event.dto';
+import { CreateEventDTO, EventResponseDTO } from './event.dto';
 import { AppError } from '@/middlewares/error.middleware';
 import { PaginatedEndpointResponse, PaginationParams } from '@/lib/shared';
 
@@ -27,7 +27,11 @@ class EventController {
     }
   };
 
-  getById = async (req: Request<{ id: string }>, res: Response<Event>, next: NextFunction) => {
+  getById = async (
+    req: Request<{ id: string }>,
+    res: Response<EventResponseDTO>,
+    next: NextFunction,
+  ) => {
     try {
       const event = await eventService.findOne({ where: { id: parseInt(req.params.id) } });
       if (event) {
@@ -41,7 +45,7 @@ class EventController {
 
   search = async (
     req: Request<{}, {}, {}, EventSearchParams>,
-    res: Response<PaginatedEndpointResponse<Event>>,
+    res: Response<PaginatedEndpointResponse<EventResponseDTO>>,
     next: NextFunction,
   ) => {
     try {

@@ -1,11 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
 import { userService } from './user.service';
-import { User } from './user.entity';
-import { CreateUserDTO } from './user.dto';
+import { CreateUserDTO, UserResponseDTO } from './user.dto';
 import { AppError } from '@/middlewares/error.middleware';
 
 class UserController {
-  create = async (req: Request<{}, {}, CreateUserDTO>, res: Response<User>, next: NextFunction) => {
+  create = async (
+    req: Request<{}, {}, CreateUserDTO>,
+    res: Response<UserResponseDTO>,
+    next: NextFunction,
+  ) => {
     try {
       const user = await userService.create(req.body);
       return res.status(201).json(user);
@@ -13,7 +16,7 @@ class UserController {
       next(err);
     }
   };
-  getCurrentUser = async (req: Request, res: Response<User>, next: NextFunction) => {
+  getCurrentUser = async (req: Request, res: Response<UserResponseDTO>, next: NextFunction) => {
     try {
       const id = parseInt(req.user!.sub as string);
       const user = await userService.findOne({ where: { id } });
@@ -25,7 +28,11 @@ class UserController {
       next(err);
     }
   };
-  findById = async (req: Request<{ id: string }>, res: Response<User>, next: NextFunction) => {
+  findById = async (
+    req: Request<{ id: string }>,
+    res: Response<UserResponseDTO>,
+    next: NextFunction,
+  ) => {
     try {
       const id = parseInt(req.params.id);
       const user = await userService.findOne({ where: { id } });

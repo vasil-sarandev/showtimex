@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { backendForFrontEndService } from './bff.service';
-import { EventPageDataDTO } from './bff.dto';
+import { EventPageDataResponseDTO } from './bff.dto';
 import { AppError } from '@/middlewares/error.middleware';
 
 class BackendForFrontEndController {
@@ -8,7 +8,7 @@ class BackendForFrontEndController {
 
   getEventPageData = async (
     req: Request<{ id: string }>,
-    res: Response<EventPageDataDTO>,
+    res: Response<EventPageDataResponseDTO>,
     next: NextFunction,
   ) => {
     try {

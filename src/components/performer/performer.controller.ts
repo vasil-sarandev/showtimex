@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreatePerformerDTO } from './performer.dto';
-import { Performer } from './performer.entity';
+import { CreatePerformerDTO, PerformerResponseDTO } from './performer.dto';
 import { performerService } from './performer.service';
 import { AppError } from '@/middlewares/error.middleware';
 import { PaginatedEndpointResponse, PaginationParams } from '@/lib/shared';
@@ -14,7 +13,7 @@ class PerformerController {
 
   create = async (
     req: Request<{}, {}, CreatePerformerDTO>,
-    res: Response<Performer>,
+    res: Response<PerformerResponseDTO>,
     next: NextFunction,
   ) => {
     try {
@@ -25,7 +24,11 @@ class PerformerController {
     }
   };
 
-  getById = async (req: Request<{ id: string }>, res: Response<Performer>, next: NextFunction) => {
+  getById = async (
+    req: Request<{ id: string }>,
+    res: Response<PerformerResponseDTO>,
+    next: NextFunction,
+  ) => {
     try {
       const performer = await performerService.findOne({ where: { id: parseInt(req.params.id) } });
       if (performer) {
@@ -39,7 +42,7 @@ class PerformerController {
 
   search = async (
     req: Request<{}, {}, {}, PerformerSearchParams>,
-    res: Response<PaginatedEndpointResponse<Performer>>,
+    res: Response<PaginatedEndpointResponse<PerformerResponseDTO>>,
     next: NextFunction,
   ) => {
     try {

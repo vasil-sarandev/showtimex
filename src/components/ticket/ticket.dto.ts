@@ -1,3 +1,5 @@
+import { Ticket } from './ticket.entity';
+
 export interface CreateTicketBatchDTO {
   eventId: number;
   price: number;
@@ -5,3 +7,6 @@ export interface CreateTicketBatchDTO {
   section: string;
   type?: string;
 }
+
+// default dto - no relations
+export type TicketResponseDTO = Omit<Ticket, 'event' | 'user' | 'payment'>;

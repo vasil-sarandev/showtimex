@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateTicketBatchDTO } from './ticket.dto';
-import { Ticket, TicketStatus } from './ticket.entity';
+import { CreateTicketBatchDTO, TicketResponseDTO } from './ticket.dto';
+import { TicketStatus } from './ticket.entity';
 import { ticketService } from './ticket.service';
 import { AppError } from '@/middlewares/error.middleware';
 import { PaginatedEndpointResponse, PaginationParams } from '@/lib/shared';
@@ -15,7 +15,7 @@ class TicketController {
 
   createBatch = async (
     req: Request<{}, {}, CreateTicketBatchDTO>,
-    res: Response<Ticket[]>,
+    res: Response<TicketResponseDTO[]>,
     next: NextFunction,
   ) => {
     try {
@@ -26,7 +26,11 @@ class TicketController {
     }
   };
 
-  getById = async (req: Request<{ id: string }>, res: Response<Ticket>, next: NextFunction) => {
+  getById = async (
+    req: Request<{ id: string }>,
+    res: Response<TicketResponseDTO>,
+    next: NextFunction,
+  ) => {
     try {
       const ticket = await ticketService.findOne({ where: { id: parseInt(req.params.id) } });
       if (ticket) {
@@ -40,7 +44,7 @@ class TicketController {
 
   search = async (
     req: Request<{}, {}, {}, TicketSearchParams>,
-    res: Response<PaginatedEndpointResponse<Ticket>>,
+    res: Response<PaginatedEndpointResponse<TicketResponseDTO>>,
     next: NextFunction,
   ) => {
     try {

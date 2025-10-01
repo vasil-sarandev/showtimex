@@ -1,3 +1,5 @@
+import { Event } from './event.entity';
+
 export interface CreateEventDTO {
   title: string;
   description?: string;
@@ -5,3 +7,6 @@ export interface CreateEventDTO {
   performerIds: number[];
   date: string;
 }
+
+// default dto - no relations
+export type EventResponseDTO = Omit<Event, 'performers' | 'tickets' | 'venue'>;

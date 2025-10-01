@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
-import { Venue } from './venue.entity';
 import { venueService } from './venue.service';
-import { CreateVenueDTO } from './venue.dto';
+import { CreateVenueDTO, VenueResponseDTO } from './venue.dto';
 import { AppError } from '@/middlewares/error.middleware';
 
 class VenueController {
@@ -9,7 +8,7 @@ class VenueController {
 
   create = async (
     req: Request<{}, {}, CreateVenueDTO>,
-    res: Response<Venue>,
+    res: Response<VenueResponseDTO>,
     next: NextFunction,
   ) => {
     try {
@@ -20,7 +19,11 @@ class VenueController {
     }
   };
 
-  getById = async (req: Request<{ id: string }>, res: Response<Venue>, next: NextFunction) => {
+  getById = async (
+    req: Request<{ id: string }>,
+    res: Response<VenueResponseDTO>,
+    next: NextFunction,
+  ) => {
     try {
       const venue = await venueService.findOne({ where: { id: parseInt(req.params.id) } });
       if (venue) {
