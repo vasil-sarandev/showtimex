@@ -1,456 +1,384 @@
 {
-	"info": {
-		"_postman_id": "4c808cc4-2302-4347-b6ee-88ec6dd850f9",
-		"name": "showtimex",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "45919360",
-		"_collection_link": "https://vasilsarandev.postman.co/workspace/Vasil-Sarandev's-Workspace~f8b56026-3056-41b6-8215-8a19feaca584/collection/45919360-4c808cc4-2302-4347-b6ee-88ec6dd850f9?action=share&source=collection_link&creator=45919360"
-	},
-	"item": [
-		{
-			"name": "user",
-			"item": [
-				{
-					"name": "/user",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"first_name\": \"Vasil\",\n    \"last_name\": \"Sarandev\",\n    \"email\": \"vasil.sarandev@outlook.com\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/user",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/user/me",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/user/me",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"user",
-								"me"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/user/$id",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/user/4",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"user",
-								"4"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "event",
-			"item": [
-				{
-					"name": "/event",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"title\": \"Summer Fest 2025\",\n    \"description\": \"Once in a lifetime Sphere Experience\",\n    \"date\": \"2025-08-31\",\n    \"venueId\": 5,\n    \"performerIds\": []\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/event",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"event"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/event/$id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/event/4",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"event",
-								"4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/event/search",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/event/search?page=1&limit=20",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"event",
-								"search"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "limit",
-									"value": "20"
-								},
-								{
-									"key": "venueId",
-									"value": "4",
-									"disabled": true
-								},
-								{
-									"key": "term",
-									"value": "hello",
-									"disabled": true
-								},
-								{
-									"key": "date",
-									"value": "2025-08-31",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "venue",
-			"item": [
-				{
-					"name": "/venue",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"LA Sphere\",\n    \"capacity\": 10000,\n    \"google_maps_url\": \"https://google.com\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/venue",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"venue"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/venue/$id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/venue/4",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"venue",
-								"4"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "ticket",
-			"item": [
-				{
-					"name": "/batch",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"count\" : 30, \"section\": \"VIP\", \"eventId\": 5, \"price\": 30.9, \"type\": \"VIP\"}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/ticket/batch",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"ticket",
-								"batch"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/ticket/$id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/ticket/63",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"ticket",
-								"63"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/ticket/search",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/ticket/search?page=1&limit=20&eventId=4&status=AVAILABLE",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"ticket",
-								"search"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "limit",
-									"value": "20"
-								},
-								{
-									"key": "eventId",
-									"value": "4"
-								},
-								{
-									"key": "status",
-									"value": "AVAILABLE"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "performer",
-			"item": [
-				{
-					"name": "/performer",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Aubrey\",\n    \"social_url\": \"https://instagram.com/whoischampagnepapi\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/performer",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"performer"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/performer/id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/performer/1",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"performer",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "/performer/search",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/performer/search?page=1&limit=20",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"performer",
-								"search"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "limit",
-									"value": "20"
-								},
-								{
-									"key": "name",
-									"value": "Drak",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "backendForFrontEnd",
-			"item": [
-				{
-					"name": "event-page/$id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/bff/event-page/5",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"bff",
-								"event-page",
-								"5"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "4c808cc4-2302-4347-b6ee-88ec6dd850f9",
+    "name": "showtimex",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "45919360",
+    "_collection_link": "https://vasilsarandev.postman.co/workspace/Vasil-Sarandev's-Workspace~f8b56026-3056-41b6-8215-8a19feaca584/collection/45919360-4c808cc4-2302-4347-b6ee-88ec6dd850f9?action=share&source=collection_link&creator=45919360"
+  },
+  "item": [
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "/user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"first_name\": \"Vasil\",\n    \"last_name\": \"Sarandev\",\n    \"email\": \"vasil.sarandev@outlook.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/user",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/user/me",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/user/me",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user", "me"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/user/$id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/user/4",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["user", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "event",
+      "item": [
+        {
+          "name": "/event",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Summer Fest 2025\",\n    \"description\": \"Once in a lifetime Sphere Experience\",\n    \"date\": \"2025-08-31\",\n    \"venueId\": 5,\n    \"performerIds\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/event",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["event"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/event/$id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/event/4",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["event", "4"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/event/search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/event/search?page=1&limit=20",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["event", "search"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "venueId",
+                  "value": "4",
+                  "disabled": true
+                },
+                {
+                  "key": "term",
+                  "value": "hello",
+                  "disabled": true
+                },
+                {
+                  "key": "date",
+                  "value": "2025-08-31",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "venue",
+      "item": [
+        {
+          "name": "/venue",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"LA Sphere\",\n    \"capacity\": 10000,\n    \"google_maps_url\": \"https://google.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/venue",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["venue"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/venue/$id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/venue/4",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["venue", "4"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ticket",
+      "item": [
+        {
+          "name": "/batch",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"count\" : 30, \"section\": \"VIP\", \"eventId\": 5, \"price\": 30.9, \"type\": \"VIP\"}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/ticket/batch",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["ticket", "batch"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/ticket/$id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/ticket/63",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["ticket", "63"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/ticket/search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/ticket/search?page=1&limit=20&eventId=4&status=AVAILABLE",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["ticket", "search"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "eventId",
+                  "value": "4"
+                },
+                {
+                  "key": "status",
+                  "value": "AVAILABLE"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "performer",
+      "item": [
+        {
+          "name": "/performer",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Aubrey\",\n    \"social_url\": \"https://instagram.com/whoischampagnepapi\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:3000/performer",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["performer"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/performer/id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/performer/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["performer", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/performer/search",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/performer/search?page=1&limit=20",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["performer", "search"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "name",
+                  "value": "Drak",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "backendForFrontEnd",
+      "item": [
+        {
+          "name": "event-page/$id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:3000/bff/event-page/5",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["bff", "event-page", "5"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
 }
