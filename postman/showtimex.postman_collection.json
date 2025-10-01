@@ -162,7 +162,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/event/search?page=1&limit=20&date=2025-08-31",
+							"raw": "localhost:3000/event/search?page=1&limit=20",
 							"host": [
 								"localhost"
 							],
@@ -192,7 +192,8 @@
 								},
 								{
 									"key": "date",
-									"value": "2025-08-31"
+									"value": "2025-08-31",
+									"disabled": true
 								}
 							]
 						}
@@ -262,7 +263,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"count\" : 30, \"section\": \"VIP\", \"eventId\": 4, \"price\": 40.5, \"type\": \"VIP\"}",
+							"raw": "{\"count\" : 30, \"section\": \"VIP\", \"eventId\": 5, \"price\": 30.9, \"type\": \"VIP\"}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -297,6 +298,153 @@
 							"path": [
 								"ticket",
 								"63"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/ticket/search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/ticket/search?page=1&limit=20&eventId=4&status=AVAILABLE",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"ticket",
+								"search"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "eventId",
+									"value": "4"
+								},
+								{
+									"key": "status",
+									"value": "AVAILABLE"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "performer",
+			"item": [
+				{
+					"name": "/performer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Aubrey\",\n    \"social_url\": \"https://instagram.com/whoischampagnepapi\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/performer",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"performer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/performer/id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/performer/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"performer",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/performer/search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/performer/search?page=1&limit=20",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"performer",
+								"search"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "name",
+									"value": "Drak",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "backendForFrontEnd",
+			"item": [
+				{
+					"name": "event-page/$id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/bff/event-page/5",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"bff",
+								"event-page",
+								"5"
 							]
 						}
 					},
