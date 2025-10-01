@@ -1,5 +1,5 @@
 import { IsUrl, Length, Max, Min } from 'class-validator';
-import { Check, Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Check, Column, Entity, OneToMany, PrimaryGeneratedColumn, Relation } from 'typeorm';
 import { Event } from '../event/event.entity';
 
 const MIN_CAPACITY = 10;
@@ -30,6 +30,6 @@ export class Venue {
 
   // Event - OneToMany
   @OneToMany(() => Event, event => event.venue)
-  events: Event[];
+  events: Relation<Event>[];
   // ---
 }

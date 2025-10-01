@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, OneToOne, ManyToOne, Column, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  OneToOne,
+  ManyToOne,
+  Column,
+  JoinColumn,
+  Relation,
+} from 'typeorm';
 import { Ticket } from '../ticket/ticket.entity';
 import { User } from '../user/user.entity';
 
@@ -22,7 +30,7 @@ export class Payment {
   // Ticket - OneToOne
   @OneToOne(() => Ticket, ticket => ticket.payment)
   @JoinColumn({ name: 'ticketId' })
-  ticket: Ticket;
+  ticket: Relation<Ticket>;
 
   @Column({ type: 'int' })
   ticketId: number; // expose FK
@@ -30,7 +38,7 @@ export class Payment {
 
   // User - ManyToOne
   @ManyToOne(() => User, user => user.payments)
-  user: User;
+  user: Relation<User>;
 
   @Column({ type: 'int' })
   userId: number;

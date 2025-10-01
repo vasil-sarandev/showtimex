@@ -6,6 +6,8 @@ import {
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
+  Relation,
+  Unique,
 } from 'typeorm';
 import { Length } from 'class-validator';
 import { Event } from '../event/event.entity';
@@ -29,6 +31,7 @@ export enum TicketStatus {
 @Entity()
 @Check(`char_length("type") >= ${TYPE_MIN_LEN} AND char_length("type") <= ${TYPE_MAX_LEN}`)
 @Check(`char_length("seat") >= ${SEAT_MIN_LEN} AND char_length("type") <= ${SEAT_MAX_LEN}`)
+@Unique(['eventId', 'seat']) // <-- composite unique constraint
 export class Ticket {
   @PrimaryGeneratedColumn({ type: 'int' })
   id: number;
@@ -51,14 +54,14 @@ export class Ticket {
   @Length(TYPE_MIN_LEN, TYPE_MAX_LEN)
   type: string;
 
-  @Column({ type: 'varchar', unique: true })
+  @Column({ type: 'varchar' })
   @Length(SEAT_MIN_LEN, SEAT_MAX_LEN)
   seat: string;
 
   // Event - ManyToOne
   @ManyToOne(() => Event, event => event.tickets)
   @JoinColumn({ name: 'eventId' })
-  event: Event;
+  event: Relation<Event>;
 
   @Column({ type: 'int' })
   eventId: number; // expose FK
@@ -66,12 +69,12 @@ export class Ticket {
 
   // User - ManyToOne
   @ManyToOne(() => User, user => user.tickets, { nullable: true })
-  user: User;
+  user: Relation<User>;
 
   @Column({ type: 'int', nullable: true })
   userId: number; //expose FK
   // ---
 
   @OneToOne(() => Payment, payment => payment.ticket)
-  payment: Payment;
+  payment: Relation<Payment>;
 }

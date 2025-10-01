@@ -1,4 +1,4 @@
-import { FindOneOptions, FindOptionsWhere, ILike, Repository } from 'typeorm';
+import { FindManyOptions, FindOneOptions, FindOptionsWhere, ILike, Repository } from 'typeorm';
 import { validateOrReject } from 'class-validator';
 import { Performer } from './performer.entity';
 import { performerRepository } from './performer.repository';
@@ -14,6 +14,10 @@ class PerformerService {
 
   findOne = async (options: FindOneOptions<Performer>) => {
     return this.repository.findOne(options);
+  };
+
+  find = async (options: FindManyOptions<Performer>) => {
+    return this.repository.find(options);
   };
 
   create = async (data: CreatePerformerDTO) => {

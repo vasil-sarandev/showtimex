@@ -28,6 +28,10 @@ class EventService {
     return this.repository.findOne(options);
   };
 
+  findOneOrFail = async (options: FindOneOptions) => {
+    return this.repository.findOneOrFail(options);
+  };
+
   search = async ({ term, venueId, date, ...rest }: EventSearchParams) => {
     const { skip, take } = computePaginationParams({ ...rest });
     const qb = this.repository.createQueryBuilder('event');

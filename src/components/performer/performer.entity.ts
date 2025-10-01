@@ -1,5 +1,5 @@
 import { IsUrl } from 'class-validator';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, Check } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, Check, Relation } from 'typeorm';
 import { Event } from '../event/event.entity';
 
 @Entity()
@@ -20,5 +20,5 @@ export class Performer {
 
   // Event - ManyToMany
   @ManyToMany(() => Event, event => event.performers)
-  events: Event[];
+  events: Relation<Event>[];
 }

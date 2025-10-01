@@ -19,6 +19,10 @@ class VenueService {
   findOne = async (options: FindOneOptions<Venue>) => {
     return this.repository.findOne(options);
   };
+
+  findOneOrFail = async (options: FindOneOptions<Venue>) => {
+    return this.repository.findOneOrFail(options);
+  };
 }
 
 export const venueService = new VenueService();

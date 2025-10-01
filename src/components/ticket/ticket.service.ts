@@ -1,5 +1,4 @@
-import { FindOneOptions, FindOptionsWhere, Repository } from 'typeorm';
-import { validateOrReject } from 'class-validator';
+import { FindManyOptions, FindOneOptions, FindOptionsWhere, Repository } from 'typeorm';
 import { Ticket, TicketStatus } from './ticket.entity';
 import { ticketRepository } from './ticket.repository';
 import { CreateTicketBatchDTO } from './ticket.dto';
@@ -16,6 +15,10 @@ class TicketService {
 
   findOne = async (options: FindOneOptions<Ticket>) => {
     return this.repository.findOne(options);
+  };
+
+  find = async (options: FindManyOptions<Ticket>) => {
+    return this.repository.find(options);
   };
 
   createBatchTransaction = async ({
@@ -44,7 +47,6 @@ class TicketService {
           eventId,
         })),
       );
-      await validateOrReject(tickets);
       return transactionRepository.save(tickets);
     });
   };

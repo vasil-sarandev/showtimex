@@ -8,6 +8,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Relation,
 } from 'typeorm';
 import { Length } from 'class-validator';
 import { Ticket } from '../ticket/ticket.entity';
@@ -35,13 +36,13 @@ export class Event {
 
   // Ticket (OneToMany)
   @OneToMany(() => Ticket, ticket => ticket.event)
-  tickets: Ticket[];
+  tickets: Relation<Ticket>[];
   // ---
 
   // Venue (ManyToOne)
   @ManyToOne(() => Venue, venue => venue.events)
   @JoinColumn({ name: 'venueId' })
-  venue: Venue;
+  venue: Relation<Venue>;
 
   @Column({ type: 'int' })
   venueId: number; // expose FK
@@ -50,6 +51,6 @@ export class Event {
   // Performer (ManyToMany)
   @ManyToMany(() => Performer, performer => performer.events)
   @JoinTable()
-  performers: Performer[];
+  performers: Relation<Performer>[];
   // ---
 }
