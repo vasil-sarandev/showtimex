@@ -4,8 +4,8 @@
   "description": "showtimex is an OSS ticket booking application",
   "main": "app.js",
   "scripts": {
-    "dev": "docker compose -f docker-compose.dev.yaml up --build",
-    "build": "docker compose -f docker-compose.yaml up --build",
+    "dev": "docker compose -f ./docker/docker-compose.dev.yaml up --build",
+    "build": "docker compose -f ./docker/docker-compose.yaml up --build",
     "docker:down": "docker compose down --volumes",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:create": "node -e \"const name=process.argv[1]; require('child_process').spawnSync('npm',['run','typeorm','--','migration:create','./src/migrations/'+name],{stdio:'inherit'});\"",

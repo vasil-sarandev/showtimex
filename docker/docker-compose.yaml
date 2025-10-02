@@ -2,8 +2,9 @@ services:
   app:
     image: showtimex:prod
     build:
-      context: .
+      context: ../
       target: prod
+      dockerfile: ./docker/Dockerfile
     environment:
       - NODE_ENV=development
     ports:

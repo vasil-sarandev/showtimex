@@ -1,13 +1,15 @@
+name: showtimex
 services:
   app:
     image: showtimex:dev
     build:
-      context: .
+      context: ../
       target: dev
+      dockerfile: ./docker/Dockerfile
     environment:
       - NODE_ENV=development
     volumes:
-      - .:/usr/src/app       # Mount current directory inside container
+      - ../:/usr/src/app       # Mount project root directory inside container
       - /usr/src/app/node_modules  # Prevent overwriting node_modules inside container
     ports:
       - '3000:3000'
@@ -24,7 +26,7 @@ services:
       POSTGRES_DB: showtimex   # create the db on first run
     volumes:
       - db-data:/var/lib/postgresql/data   # Persist db data to named volume
-      - ./scripts/init-datestyle.sql:/docker-entrypoint-initdb.d/init-datestyle.sql
+      - ../scripts/init-datestyle.sql:/docker-entrypoint-initdb.d/init-datestyle.sql
     ports:
       - '5432:5432'
     networks:
