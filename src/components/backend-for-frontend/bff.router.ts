@@ -1,6 +1,8 @@
 import { Router } from 'express';
-import { backendForFrontEndController } from './bff.controller';
+import { bffController } from './bff.controller';
 
-export const backendForFrontEndRouter = Router();
+export const bffRouter = Router();
 
-backendForFrontEndRouter.get('/event-page/:id', backendForFrontEndController.getEventPageData);
+bffRouter.get('/event-page/:id', bffController.getEventPageData);
+bffRouter.get('/performer-page/:id', bffController.getPerformerPageData);
+bffRouter.get('/venue-page/:id', bffController.getVenuePageData);

@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { backendForFrontEndService } from './bff.service';
-import { EventPageDataResponseDTO } from './bff.dto';
-import { AppError } from '@/middlewares/error.middleware';
+import { bffService } from './bff.service';
+import { EventPageDataResponseDTO } from './dto/event-page.dto';
+import { PerformerPageDTO } from './dto/performer-page.dto';
+import { VenuePageDTO } from './dto/venue-page.dto';
 
 class BackendForFrontEndController {
   constructor() {}
@@ -12,15 +13,38 @@ class BackendForFrontEndController {
     next: NextFunction,
   ) => {
     try {
-      const eventPageData = await backendForFrontEndService.getEventPageData(
-        parseInt(req.params.id, 10),
-      );
-      res.status(200).json(eventPageData);
-      throw new AppError(404, 'event not found');
+      const eventPageData = await bffService.getEventPageData(parseInt(req.params.id, 10));
+      return res.status(200).json(eventPageData);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  getPerformerPageData = async (
+    req: Request<{ id: string }>,
+    res: Response<PerformerPageDTO>,
+    next: NextFunction,
+  ) => {
+    try {
+      const performerPageData = await bffService.getPerformerPageData(parseInt(req.params.id, 10));
+      return res.status(200).json(performerPageData);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  getVenuePageData = async (
+    req: Request<{ id: string }>,
+    res: Response<VenuePageDTO>,
+    next: NextFunction,
+  ) => {
+    try {
+      const venuePageData = await bffService.getVenuePageData(parseInt(req.params.id, 10));
+      return res.status(200).json(venuePageData);
     } catch (err) {
       next(err);
     }
   };
 }
 
-export const backendForFrontEndController = new BackendForFrontEndController();
+export const bffController = new BackendForFrontEndController();

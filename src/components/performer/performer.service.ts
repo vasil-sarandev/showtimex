@@ -16,6 +16,10 @@ class PerformerService {
     return this.repository.findOne(options);
   };
 
+  findOneOrFail = async (options: FindOneOptions<Performer>) => {
+    return this.repository.findOneOrFail(options);
+  };
+
   find = async (options: FindManyOptions<Performer>) => {
     return this.repository.find(options);
   };

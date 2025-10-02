@@ -35,7 +35,7 @@ class PaymentService {
       ticket.status = TicketStatus.reserved;
       await manager.save(ticket);
 
-      const payment = manager.create(Payment, { ticket, user: { id: userId } });
+      const payment = manager.create(Payment, { ticket, userId });
       await manager.save(payment);
 
       const metadata: TicketPaymentMetaData = {

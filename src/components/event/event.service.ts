@@ -17,7 +17,7 @@ class EventService {
       title,
       description,
       date,
-      venue: { id: venueId },
+      venueId,
       performers: performerIds.map(p => ({ id: p })),
     });
     await validateOrReject(event);

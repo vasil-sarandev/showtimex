@@ -1,4 +1,6 @@
 import { eventService } from '../event/event.service';
+import { performerService } from '../performer/performer.service';
+import { venueService } from '../venue/venue.service';
 
 class BackendForFrontEndService {
   constructor() {}
@@ -16,6 +18,30 @@ class BackendForFrontEndService {
       performers,
     };
   };
+
+  getPerformerPageData = async (performerId: number) => {
+    const { events, ...rest } = await performerService.findOneOrFail({
+      where: { id: performerId },
+      relations: ['events'],
+    });
+
+    return {
+      performer: { ...rest },
+      events,
+    };
+  };
+
+  getVenuePageData = async (eventId: number) => {
+    const { events, ...rest } = await venueService.findOneOrFail({
+      where: { id: eventId },
+      relations: ['events'],
+    });
+
+    return {
+      venue: { ...rest },
+      events,
+    };
+  };
 }
 
-export const backendForFrontEndService = new BackendForFrontEndService();
+export const bffService = new BackendForFrontEndService();

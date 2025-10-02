@@ -5,7 +5,7 @@ import { eventRouter } from './event/event.router';
 import { venueRouter } from './venue/venue.router';
 import { ticketRouter } from './ticket/ticket.router';
 import { performerRouter } from './performer/performer.router';
-import { backendForFrontEndRouter } from './backend-for-frontend/bff.router';
+import { bffRouter } from './backend-for-frontend/bff.router';
 
 export const appRouter = Router();
 
@@ -15,4 +15,4 @@ appRouter.use('/event', eventRouter);
 appRouter.use('/venue', venueRouter);
 appRouter.use('/ticket', ticketRouter);
 appRouter.use('/performer', performerRouter);
-appRouter.use('/bff', backendForFrontEndRouter);
+appRouter.use('/bff', bffRouter);
