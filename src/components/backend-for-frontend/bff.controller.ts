@@ -1,15 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { bffService } from './bff.service';
-import { EventPageDataResponseDTO } from './dto/event-page.dto';
-import { PerformerPageDTO } from './dto/performer-page.dto';
-import { VenuePageDTO } from './dto/venue-page.dto';
+import { EventPageResponseDTO, PerformerPageResponseDTO, VenuePageResponseDTO } from './bff.dto';
 
 class BackendForFrontEndController {
   constructor() {}
 
   getEventPageData = async (
     req: Request<{ id: string }>,
-    res: Response<EventPageDataResponseDTO>,
+    res: Response<EventPageResponseDTO>,
     next: NextFunction,
   ) => {
     try {
@@ -22,7 +20,7 @@ class BackendForFrontEndController {
 
   getPerformerPageData = async (
     req: Request<{ id: string }>,
-    res: Response<PerformerPageDTO>,
+    res: Response<PerformerPageResponseDTO>,
     next: NextFunction,
   ) => {
     try {
@@ -35,7 +33,7 @@ class BackendForFrontEndController {
 
   getVenuePageData = async (
     req: Request<{ id: string }>,
-    res: Response<VenuePageDTO>,
+    res: Response<VenuePageResponseDTO>,
     next: NextFunction,
   ) => {
     try {
