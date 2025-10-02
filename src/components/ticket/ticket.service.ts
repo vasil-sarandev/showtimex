@@ -4,7 +4,7 @@ import { ticketRepository } from './ticket.repository';
 import { CreateTicketBatchDTO } from './ticket.dto';
 import { extractSeatNumberFromTicket, generateSeats } from './ticket.util';
 import { TicketSearchParams } from './ticket.controller';
-import { appDataSource } from '@/lib/typeorm/typeorm.index';
+import { AppDataSource } from '@/lib/typeorm/typeorm.index';
 import { computePaginationParams } from '@/lib/shared';
 
 class TicketService {
@@ -28,7 +28,7 @@ class TicketService {
     section,
     count,
   }: CreateTicketBatchDTO) => {
-    return appDataSource.transaction(async manager => {
+    return AppDataSource.transaction(async manager => {
       const transactionRepository = manager.getRepository(Ticket);
       const lastTicketInSection = await transactionRepository
         .createQueryBuilder('ticket')

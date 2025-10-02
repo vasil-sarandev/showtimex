@@ -8,12 +8,11 @@ import {
   APP_DATABASE_SYNCHRONIZE_FLAG,
   APP_DATABASE_TYPE,
   APP_DATABASE_USERNAME,
-} from '@/config';
+} from '../../config';
 
-// forced to cast this because of TypeORM's type safety
 const type = APP_DATABASE_TYPE as 'postgres' | 'mysql' | 'mongodb';
 
-export const appDataSource = new DataSource({
+export const AppDataSource = new DataSource({
   type,
   host: APP_DATABASE_HOST,
   port: APP_DATABASE_PORT,
@@ -27,4 +26,4 @@ export const appDataSource = new DataSource({
   subscribers: [],
 });
 
-export const initializeTypeORM = () => appDataSource.initialize();
+export const initializeTypeORM = () => AppDataSource.initialize();

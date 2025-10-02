@@ -5,7 +5,7 @@ import { Payment, PaymentStatus } from './payment.entity';
 import { paymentRepository } from './payment.repository';
 import { AppError } from '@/middlewares/error.middleware';
 import { PaymentIntentMetadata, stripeService } from '@/lib/stripe/stripe.index';
-import { appDataSource } from '@/lib/typeorm/typeorm.index';
+import { AppDataSource } from '@/lib/typeorm/typeorm.index';
 
 type TicketPaymentMetaData = PaymentIntentMetadata<{ paymentId: string; ticketId: string }>;
 
@@ -27,7 +27,7 @@ class PaymentService {
     // 2. create a payment in the table (with status PENDING)
     // 3. create a stripe payment intent which contains the ticket and payment ids in metadata
     // 4. return the payment intent to the controller
-    return appDataSource.transaction(async manager => {
+    return AppDataSource.transaction(async manager => {
       const ticket = await manager.findOneByOrFail(Ticket, { id: ticketId });
       if (ticket.status !== TicketStatus.available) {
         throw new AppError(400, 'Ticket not available');
@@ -59,7 +59,7 @@ class PaymentService {
     // 1. find the payment, set its status to SUCCESSFUL
     // 2. find the ticket, set its status to PURCHASED and assign the ticket to the user.
     const { ticketId, paymentId } = event.data.object.metadata;
-    return appDataSource.transaction(async manager => {
+    return AppDataSource.transaction(async manager => {
       const payment = await manager.findOneByOrFail(Payment, { id: parseInt(paymentId) });
       payment.status = PaymentStatus.successful;
       await manager.save(payment);
@@ -80,7 +80,7 @@ class PaymentService {
     // 1. find the ticket, set its status to AVAILABLE
     // 2. find the payment, set its status to FAILED
     const { ticketId, paymentId } = event.data.object.metadata;
-    return appDataSource.transaction(async manager => {
+    return AppDataSource.transaction(async manager => {
       const ticket = await manager.findOneByOrFail(Ticket, { id: parseInt(ticketId) });
       ticket.status = TicketStatus.available;
       await manager.save(ticket);

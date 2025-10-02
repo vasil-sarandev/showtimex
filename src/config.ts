@@ -1,4 +1,10 @@
-// todo: add dotenv at some point so we can get errors if env variables are missing.
+import dotenv from 'dotenv';
+
+// load the env file for migrations because typeorm-ts-node-commonjs doesn't support --env-file flag.
+if (process.env.TYPEORM_ENV_CONFIG_PATH) {
+  dotenv.config({ path: process.env.TYPEORM_ENV_CONFIG_PATH });
+}
+
 export const APP_PORT = parseInt(process.env.APP_PORT as string);
 export const APP_JWT_SECRET = process.env.APP_JWT_SECRET as string;
 export const APP_STRIPE_API_KEY = process.env.APP_STRIPE_API_KEY as string;

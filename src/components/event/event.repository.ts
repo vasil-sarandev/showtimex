@@ -1,4 +1,4 @@
 import { Event } from './event.entity';
-import { appDataSource } from '@/lib/typeorm/typeorm.index';
+import { AppDataSource } from '@/lib/typeorm/typeorm.index';
 
-export const eventRepository = appDataSource.getRepository(Event);
+export const eventRepository = AppDataSource.getRepository(Event);

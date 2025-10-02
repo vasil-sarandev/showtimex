@@ -19,7 +19,7 @@ const TICKET_PRICE_SCALE = 2;
 const TYPE_MIN_LEN = 2;
 const TYPE_MAX_LEN = 20;
 const SEAT_MIN_LEN = 1;
-const SEAT_MAX_LEN = 10;
+const SEAT_MAX_LEN = 20;
 
 export enum TicketStatus {
   available = 'AVAILABLE',
@@ -31,7 +31,7 @@ export enum TicketStatus {
 @Entity()
 @Check(`char_length("type") >= ${TYPE_MIN_LEN} AND char_length("type") <= ${TYPE_MAX_LEN}`)
 @Check(`char_length("seat") >= ${SEAT_MIN_LEN} AND char_length("type") <= ${SEAT_MAX_LEN}`)
-@Unique(['eventId', 'seat']) // <-- composite unique constraint
+@Unique(['eventId', 'seat', 'type']) // <-- composite unique constraint
 export class Ticket {
   @PrimaryGeneratedColumn({ type: 'int' })
   id: number;

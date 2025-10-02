@@ -1,4 +1,4 @@
 import { Ticket } from './ticket.entity';
-import { appDataSource } from '@/lib/typeorm/typeorm.index';
+import { AppDataSource } from '@/lib/typeorm/typeorm.index';
 
-export const ticketRepository = appDataSource.getRepository(Ticket);
+export const ticketRepository = AppDataSource.getRepository(Ticket);
