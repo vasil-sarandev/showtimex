@@ -1,4 +1,4 @@
-import { IsUrl } from 'class-validator';
+import { IsUrl, Length } from 'class-validator';
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, Check, Relation } from 'typeorm';
 import { Event } from '../event/event.entity';
 
@@ -11,12 +11,16 @@ export class Performer {
   @PrimaryGeneratedColumn({ type: 'int' })
   id: number;
 
-  @Column({ type: 'varchar', length: 100, unique: true })
+  @Column({ type: 'varchar', unique: true })
+  @Length(0, 100)
   name: string;
 
   @Column({ type: 'varchar', unique: true })
   @IsUrl()
   social_url: string;
+
+  @Column({ type: 'varchar' })
+  label: string;
 
   // Event - ManyToMany
   @ManyToMany(() => Event, event => event.performers)

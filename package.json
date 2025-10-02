@@ -9,6 +9,7 @@
     "docker:down": "docker compose down --volumes",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:create": "node -e \"const name=process.argv[1]; require('child_process').spawnSync('npm',['run','typeorm','--','migration:create','./src/migrations/'+name],{stdio:'inherit'});\"",
+    "migration:generate": "node -e \"const name=process.argv[1]; require('child_process').spawnSync('cross-env',['TYPEORM_ENV_CONFIG_PATH=.env.local','npm','run','typeorm','--','migration:generate','./src/migrations/'+name,'-d','./src/lib/typeorm/typeorm.index'],{stdio:'inherit'});\"",
     "migration:run": "cross-env TYPEORM_ENV_CONFIG_PATH=.env.local npm run typeorm -- migration:run -d ./src/lib/typeorm/typeorm.index",
     "migration:revert": "cross-env TYPEORM_ENV_CONFIG_PATH=.env.local npm run typeorm -- migration:revert -d ./src/lib/typeorm/typeorm.index",
     "test": "echo \"No tests yet\""
