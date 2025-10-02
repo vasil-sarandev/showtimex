@@ -17,7 +17,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"first_name\": \"Vasil\",\n    \"last_name\": \"Sarandev\",\n    \"email\": \"vasil.sarandev@outlook.com\"\n}",
+              "raw": "{\n    \"first_name\": \"Vasil\",\n    \"last_name\": \"Sarandev\",\n    \"email\": \"vasil.sarandev@aol.com\",\n    \"phone_number\":\"+359885929379\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -25,9 +25,8 @@
               }
             },
             "url": {
-              "raw": "localhost:3000/user",
-              "host": ["localhost"],
-              "port": "3000",
+              "raw": "{{API_URL}}/user",
+              "host": ["{{API_URL}}"],
               "path": ["user"]
             }
           },
@@ -54,9 +53,8 @@
               }
             },
             "url": {
-              "raw": "localhost:3000/user/me",
-              "host": ["localhost"],
-              "port": "3000",
+              "raw": "{{API_URL}}/user/me",
+              "host": ["{{API_URL}}"],
               "path": ["user", "me"]
             }
           },
@@ -83,10 +81,9 @@
               }
             },
             "url": {
-              "raw": "localhost:3000/user/4",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["user", "4"]
+              "raw": "{{API_URL}}/user/1",
+              "host": ["{{API_URL}}"],
+              "path": ["user", "1"]
             }
           },
           "response": []
@@ -111,9 +108,8 @@
               }
             },
             "url": {
-              "raw": "localhost:3000/event",
-              "host": ["localhost"],
-              "port": "3000",
+              "raw": "{{API_URL}}/event",
+              "host": ["{{API_URL}}"],
               "path": ["event"]
             }
           },
@@ -125,10 +121,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/event/4",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["event", "4"]
+              "raw": "{{API_URL}}/event/7",
+              "host": ["{{API_URL}}"],
+              "path": ["event", "7"]
             }
           },
           "response": []
@@ -139,9 +134,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/event/search?page=1&limit=20",
-              "host": ["localhost"],
-              "port": "3000",
+              "raw": "{{API_URL}}/event/search?page=1&limit=20",
+              "host": ["{{API_URL}}"],
               "path": ["event", "search"],
               "query": [
                 {
@@ -192,9 +186,8 @@
               }
             },
             "url": {
-              "raw": "localhost:3000/venue",
-              "host": ["localhost"],
-              "port": "3000",
+              "raw": "{{API_URL}}/venue",
+              "host": ["{{API_URL}}"],
               "path": ["venue"]
             }
           },
@@ -206,10 +199,9 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/venue/4",
-              "host": ["localhost"],
-              "port": "3000",
-              "path": ["venue", "4"]
+              "raw": "{{API_URL}}/venue/5",
+              "host": ["{{API_URL}}"],
+              "path": ["venue", "5"]
             }
           },
           "response": []
@@ -234,9 +226,8 @@
               }
             },
             "url": {
-              "raw": "localhost:3000/ticket/batch",
-              "host": ["localhost"],
-              "port": "3000",
+              "raw": "{{API_URL}}/ticket/batch",
+              "host": ["{{API_URL}}"],
               "path": ["ticket", "batch"]
             }
           },
@@ -248,9 +239,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/ticket/63",
-              "host": ["localhost"],
-              "port": "3000",
+              "raw": "{{API_URL}}/ticket/63",
+              "host": ["{{API_URL}}"],
               "path": ["ticket", "63"]
             }
           },
@@ -262,9 +252,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/ticket/search?page=1&limit=20&eventId=4&status=AVAILABLE",
-              "host": ["localhost"],
-              "port": "3000",
+              "raw": "{{API_URL}}/ticket/search?page=1&limit=20&eventId=4&status=AVAILABLE",
+              "host": ["{{API_URL}}"],
               "path": ["ticket", "search"],
               "query": [
                 {
@@ -300,7 +289,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"name\": \"Aubrey\",\n    \"social_url\": \"https://instagram.com/whoischampagnepapi\"\n}",
+              "raw": "{\n    \"name\": \"Drake\",\n    \"social_url\": \"https://instagram.com/whoischampagnepapi\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -308,9 +297,8 @@
               }
             },
             "url": {
-              "raw": "localhost:3000/performer",
-              "host": ["localhost"],
-              "port": "3000",
+              "raw": "{{API_URL}}/performer",
+              "host": ["{{API_URL}}"],
               "path": ["performer"]
             }
           },
@@ -322,9 +310,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/performer/1",
-              "host": ["localhost"],
-              "port": "3000",
+              "raw": "{{API_URL}}/performer/1",
+              "host": ["{{API_URL}}"],
               "path": ["performer", "1"]
             }
           },
@@ -336,9 +323,8 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/performer/search?page=1&limit=20",
-              "host": ["localhost"],
-              "port": "3000",
+              "raw": "{{API_URL}}/performer/search?page=1&limit=20",
+              "host": ["{{API_URL}}"],
               "path": ["performer", "search"],
               "query": [
                 {
@@ -362,7 +348,7 @@
       ]
     },
     {
-      "name": "backendForFrontEnd",
+      "name": "backend-for-frontend",
       "item": [
         {
           "name": "event-page/$id",
@@ -370,10 +356,35 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "localhost:3000/bff/event-page/5",
-              "host": ["localhost"],
-              "port": "3000",
+              "raw": "{{API_URL}}/bff/event-page/5",
+              "host": ["{{API_URL}}"],
               "path": ["bff", "event-page", "5"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "performer-page/$id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{API_URL}}/bff/performer-page/1",
+              "host": ["{{API_URL}}"],
+              "path": ["bff", "performer-page", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "venue-page/$id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{API_URL}}/bff/venue-page/5",
+              "host": ["{{API_URL}}"],
+              "path": ["bff", "venue-page", "5"]
             }
           },
           "response": []
