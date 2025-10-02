@@ -29,6 +29,7 @@ export class SeedDatabase1759383550375 implements MigrationInterface {
     const perfomersSeed = Array.from({ length: 10 }).map(() => ({
       name: faker.music.artist() + SEEDED_SUFFIX,
       social_url: faker.internet.url(),
+      label: 'Independent',
     }));
     const performers = await performersRepo.save(perfomersSeed);
     // ---
