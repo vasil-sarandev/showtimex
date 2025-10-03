@@ -17,13 +17,11 @@ The development Docker compose file also runs images for the shared services lik
 
 ## Docker Compose setups
 
-For a more convenient Developer Experience, a _docker-compose_ file (docker-compose.dev.yaml) is included that spins up the shared services between the applications so you don't need to install or run them locally.
+For a more convenient Developer Experience, a _docker-compose_ file (docker-compose.dev.yaml) is included that spins up the services the application uses (like _PostgreSQL_) so you don't need to install or run them locally.
 
-The applications are containerized and naturally - the production _docker-compose_ file (docker-compose.yaml) doesn't include the shared services. Supposedly you have them running in the cloud or on a VPS at this point.
+The application is containerized and naturally - the production _docker-compose_ file (docker-compose.yaml) doesn't include the services. Supposedly you have them running in the cloud or on a VPS at this point.
 
-The docker images for apps are build using Turbo's built in `prune` method that provides us a stripped-down monorepo that only contains the relevant to the specific application files and package.json / package-lock.json. This ensures that installing new dependencies in different apps/packages won't result in different hashes for all application images.
-
-## Running the Applications
+## Running the Application
 
 Copy the `.env.local.sample` file into your own `.env.local` and make changes if needed that accommodate your setup. The `env` files are located in the _/env_ folder in the root project directory.
 
@@ -37,14 +35,17 @@ Alternatively if you don't want to run with Docker for some reason - install the
 
 ```JAVASCRIPT
 // development mode with HMR
-CMD ["npx", "tsx", "watch", "--env-file=./env/.env.local", "./src/app.ts"]
-
-// or run the build
-npx tsc && npx tsc-alias // compile and rewire paths
-node /dist/app.js // run the compiled app
+npx tsx watch --env-file=./env/.env.local "src/app.ts"
 ```
 
+## Swagger
+
+For a better DX and interaction with the API - an OpenAPI v3 spec is created within the root folder of the project (_openapi.yaml_).
+Once the server is running, a _Swagger UI_ is also available at your _host:port/swagger_ address.
+
 ## Building the Applications / Running in production mode
+
+Make sure to create an `.env` file in the _/env_ folder - the "production builds" use that instead of _.env.local_.
 
 Use the included in `package.json` command that builds the application and creates a Docker Image which a Docker Container uses to run the compiled application.
 
@@ -52,6 +53,15 @@ The build steps are documented in the `.Dockerfile`.
 
 ```
 npm run build
+```
+
+If you don't want to run the application within a Docker Container - you can compile it and run it yourself -
+
+```JAVASCRIPT
+// compile and rewire paths
+npx tsc && npx tsc-alias
+// run the compiled app
+node /dist/app.js
 ```
 
 ## Database Seeding
