@@ -1,6 +1,58 @@
-# Showtimex
+# Showtimex - OSS Ticket Booking & Payment system
 
-Showtimex is an OSS ticket booking system.
+Showtimex is an OSS Ticket Booking & Payment System that utlizes a Service-Oriented Architecture within a monolithic application.
+
+## Built with
+
+- Backend: Node, Express, TypeScript, PostgreSQL, TypeORM
+- Dev/Infra: SOA, Docker, Swagger
+
+## Prerequisites
+
+The default run/build commands for the monorepo use containers.
+
+The development Docker compose file also runs images for the shared services like PostgreSQL, so you don't have to install/configure these on your machine.
+
+[Docker Desktop - docker.com](https://www.docker.com/products/docker-desktop/)
+
+## Docker Compose setups
+
+For a more convenient Developer Experience, a _docker-compose_ file (docker-compose.dev.yaml) is included that spins up the shared services between the applications so you don't need to install or run them locally.
+
+The applications are containerized and naturally - the production _docker-compose_ file (docker-compose.yaml) doesn't include the shared services. Supposedly you have them running in the cloud or on a VPS at this point.
+
+The docker images for apps are build using Turbo's built in `prune` method that provides us a stripped-down monorepo that only contains the relevant to the specific application files and package.json / package-lock.json. This ensures that installing new dependencies in different apps/packages won't result in different hashes for all application images.
+
+## Running the Applications
+
+Copy the `.env.local.sample` file into your own `.env.local` and make changes if needed that accommodate your setup. The `env` files are located in the _/env_ folder in the root project directory.
+
+Then run the `dev` command that uses Docker and the `./docker-compose.dev.yaml` config. It also spins up the services (like _PostgreSQL_) that the application uses.
+
+```
+npm run dev
+```
+
+Alternatively if you don't want to run with Docker for some reason - install the dependencies and run the application with
+
+```JAVASCRIPT
+// development mode with HMR
+CMD ["npx", "tsx", "watch", "--env-file=./env/.env.local", "./src/app.ts"]
+
+// or run the build
+npx tsc && npx tsc-alias // compile and rewire paths
+node /dist/app.js // run the compiled app
+```
+
+## Building the Applications / Running in production mode
+
+Use the included in `package.json` command that builds the application and creates a Docker Image which a Docker Container uses to run the compiled application.
+
+The build steps are documented in the `.Dockerfile`.
+
+```
+npm run build
+```
 
 ## Database Seeding
 
