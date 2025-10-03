@@ -9,29 +9,29 @@ Showtimex is an OSS Ticket Booking & Payment System that utlizes a Service-Orien
 
 ## Prerequisites
 
-The default run/build commands for the monorepo use containers.
-
-The development Docker compose file also runs images for the shared services like PostgreSQL, so you don't have to install/configure these on your machine.
-
-[Docker Desktop - docker.com](https://www.docker.com/products/docker-desktop/)
+- **Node>v22**
+- **Docker**
+  Having _Docker_ installed is optional but recommended. The default run/build commands for the application use containers.
+  [Docker Desktop - docker.com](https://www.docker.com/products/docker-desktop/)
 
 ## Docker Compose setups
 
-For a more convenient Developer Experience, a _docker-compose_ file (docker-compose.dev.yaml) is included that spins up the services the application uses (like _PostgreSQL_) so you don't need to install or run them locally.
-
-The application is containerized and naturally - the production _docker-compose_ file (docker-compose.yaml) doesn't include the services. Supposedly you have them running in the cloud or on a VPS at this point.
+- **docker-compose.dev.yaml**
+  The docker compose setup for the app in development mode. Also includes the RDBMS service - PostgreSQL with volumes that enables us to persist the data.
+- **docker-compose.yaml**
+  The docker compose setup for the app in production mode. Doesn't include any of the application services, which at this point supposedly live in the Cloud or on a VPS.
 
 ## Running the Application
 
-Copy the `.env.local.sample` file into your own `.env.local` and make changes if needed that accommodate your setup. The `env` files are located in the _/env_ folder in the root project directory.
+Copy the `/env/.env.local.sample` file into your own `/env.env.local` and make changes if needed that accommodate your setup.
 
-Then run the `dev` command that uses Docker and the `./docker-compose.dev.yaml` config. It also spins up the services (like _PostgreSQL_) that the application uses.
+After that you can run the _development_ run command which runs the application with HMR and the database.
 
 ```
 npm run dev
 ```
 
-Alternatively if you don't want to run with Docker for some reason - install the dependencies and run the application with
+Alternatively if you don't want to run with Docker for some reason - run your own PostgreSQL instance, install the dependencies with `npm i` and then you can run the app with
 
 ```JAVASCRIPT
 // development mode with HMR
@@ -40,16 +40,13 @@ npx tsx watch --env-file=./env/.env.local "src/app.ts"
 
 ## Swagger
 
-For a better DX and interaction with the API - an OpenAPI v3 spec is created within the root folder of the project (_openapi.yaml_).
-Once the server is running, a _Swagger UI_ is also available at your _host:port/swagger_ address.
+For a better DX and interaction with the API, once the server is running, a _Swagger UI_ instance is exposed at https://localhost:3000/swagger or your defined HOST:PORT address.
 
 ## Building the Applications / Running in production mode
 
 Make sure to create an `.env` file in the _/env_ folder - the "production builds" use that instead of _.env.local_.
 
-Use the included in `package.json` command that builds the application and creates a Docker Image which a Docker Container uses to run the compiled application.
-
-The build steps are documented in the `.Dockerfile`.
+Use the defined command for running the application in production mode. The steps to it are documented in the `/docker/.Dockerfile`.
 
 ```
 npm run build
