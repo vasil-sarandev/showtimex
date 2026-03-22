@@ -1,0 +1,19 @@
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { defineConfig } from 'vitest/config';
+
+const rootDir = fileURLToPath(new URL('.', import.meta.url));
+
+export default defineConfig({
+  test: {
+    environment: 'node',
+    setupFiles: ['./tests/setup.ts'],
+    include: ['tests/**/*.spec.ts'],
+    clearMocks: true,
+  },
+  resolve: {
+    alias: {
+      '@': resolve(rootDir, 'src'),
+    },
+  },
+});
