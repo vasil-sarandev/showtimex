@@ -8,4 +8,5 @@ userRouter.use(authMiddleware);
 
 userRouter.post('/', json(), userController.create);
 userRouter.get('/me', userController.getCurrentUser);
+userRouter.get('/me/tickets', userController.getCurrentUserTickets);
 userRouter.get('/:id', userController.findById);

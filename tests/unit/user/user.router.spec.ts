@@ -6,6 +6,7 @@ const mocks = vi.hoisted(() => ({
   authMiddleware: vi.fn((req, _res, next) => next()),
   create: vi.fn((_req, res) => res.status(201).json({ id: 1 })),
   getCurrentUser: vi.fn((_req, res) => res.status(200).json({ id: 1 })),
+  getCurrentUserTickets: vi.fn((_req, res) => res.status(200).json([])),
   findById: vi.fn((_req, res) => res.status(200).json({ id: 1 })),
 }));
 
@@ -14,6 +15,7 @@ vi.mock('@/components/user/user.controller', () => ({
   userController: {
     create: mocks.create,
     getCurrentUser: mocks.getCurrentUser,
+    getCurrentUserTickets: mocks.getCurrentUserTickets,
     findById: mocks.findById,
   },
 }));
@@ -24,6 +26,7 @@ describe('userRouter', () => {
   beforeEach(() => {
     mocks.create.mockClear();
     mocks.getCurrentUser.mockClear();
+    mocks.getCurrentUserTickets.mockClear();
     mocks.findById.mockClear();
   });
 
@@ -45,6 +48,16 @@ describe('userRouter', () => {
 
     expect(response.status).toBe(200);
     expect(mocks.findById).toHaveBeenCalledTimes(1);
+  });
+
+  it('routes GET /me/tickets', async () => {
+    const app = express();
+    app.use('/user', userRouter);
+
+    const response = await request(app).get('/user/me/tickets');
+
+    expect(response.status).toBe(200);
+    expect(mocks.getCurrentUserTickets).toHaveBeenCalledTimes(1);
   });
 
   it('routes POST /', async () => {

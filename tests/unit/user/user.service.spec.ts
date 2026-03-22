@@ -59,4 +59,26 @@ describe('UserService', () => {
     expect(mocks.repository.findOne).toHaveBeenCalledWith({ where: { id: 4 } });
     expect(result).toEqual({ id: 4 });
   });
+
+  it('loads current user tickets with event and payment details', async () => {
+    const user = {
+      id: 4,
+      tickets: [
+        { id: 11, event: { date: '2026-05-10' }, payment: { id: 100 } },
+        { id: 10, event: { date: '2026-04-01' }, payment: { id: 99 } },
+      ],
+    };
+    mocks.repository.findOne.mockResolvedValue(user);
+
+    const result = await userService.getCurrentUserTickets(4);
+
+    expect(mocks.repository.findOne).toHaveBeenCalledWith({
+      where: { id: 4 },
+      relations: ['tickets', 'tickets.event', 'tickets.payment'],
+    });
+    expect(result).toEqual([
+      { id: 10, event: { date: '2026-04-01' }, payment: { id: 99 } },
+      { id: 11, event: { date: '2026-05-10' }, payment: { id: 100 } },
+    ]);
+  });
 });

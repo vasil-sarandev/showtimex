@@ -4,12 +4,14 @@ import { userController } from '@/components/user/user.controller';
 
 type CreateArgs = Parameters<typeof userController.create>;
 type CurrentArgs = Parameters<typeof userController.getCurrentUser>;
+type CurrentTicketsArgs = Parameters<typeof userController.getCurrentUserTickets>;
 type ByIdArgs = Parameters<typeof userController.findById>;
 
 const mocks = vi.hoisted(() => ({
   userService: {
     create: vi.fn(),
     findOne: vi.fn(),
+    getCurrentUserTickets: vi.fn(),
   },
 }));
 
@@ -31,6 +33,7 @@ describe('UserController', () => {
   beforeEach(() => {
     mocks.userService.create.mockReset();
     mocks.userService.findOne.mockReset();
+    mocks.userService.getCurrentUserTickets.mockReset();
   });
 
   it('create returns 201', async () => {
@@ -89,5 +92,24 @@ describe('UserController', () => {
     const err = next.mock.calls[0][0] as AppError;
     expect(err.status).toBe(404);
     expect(err.message).toBe('user not found');
+  });
+
+  it('getCurrentUserTickets returns current user tickets', async () => {
+    const req = { user: { sub: '8' } };
+    const res = createRes();
+    const next = vi.fn();
+    const tickets = [{ id: 3, event: { id: 11 }, payment: { id: 21, status: 'SUCCESSFUL' } }];
+
+    mocks.userService.getCurrentUserTickets.mockResolvedValue(tickets);
+
+    await userController.getCurrentUserTickets(
+      req as unknown as CurrentTicketsArgs[0],
+      res as unknown as CurrentTicketsArgs[1],
+      next as unknown as CurrentTicketsArgs[2],
+    );
+
+    expect(mocks.userService.getCurrentUserTickets).toHaveBeenCalledWith(8);
+    expect(res.status).toHaveBeenCalledWith(200);
+    expect(res.json).toHaveBeenCalledWith(tickets);
   });
 });

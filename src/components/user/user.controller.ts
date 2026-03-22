@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { userService } from './user.service';
-import { CreateUserDTO, UserResponseDTO } from './user.dto';
+import { CreateUserDTO, UserResponseDTO, UserTicketResponseDTO } from './user.dto';
 import { AppError } from '@/middlewares/error.middleware';
 
 class UserController {
@@ -22,6 +22,22 @@ class UserController {
       const user = await userService.findOne({ where: { id } });
       if (user) {
         return res.status(200).json(user);
+      }
+      throw new AppError(404, 'no record in db for current user');
+    } catch (err) {
+      next(err);
+    }
+  };
+  getCurrentUserTickets = async (
+    req: Request,
+    res: Response<UserTicketResponseDTO[]>,
+    next: NextFunction,
+  ) => {
+    try {
+      const id = parseInt(req.user!.sub as string);
+      const tickets = await userService.getCurrentUserTickets(id);
+      if (tickets) {
+        return res.status(200).json(tickets);
       }
       throw new AppError(404, 'no record in db for current user');
     } catch (err) {
