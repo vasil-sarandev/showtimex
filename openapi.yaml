@@ -400,6 +400,35 @@ paths:
         '404':
           description: Venue not found
 
+  /venue/search:
+    get:
+      tags: [Venue]
+      summary: Search for venues
+      operationId: searchVenues
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Paginated list of venues
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedVenueResponse'
+
 components:
   schemas:
     CreateEventDTO:
@@ -635,3 +664,13 @@ components:
           type: string
           format: uri
           nullable: true
+
+    PaginatedVenueResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/VenueResponseDTO'
+        totalCount:
+          type: integer

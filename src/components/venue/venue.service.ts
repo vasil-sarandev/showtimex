@@ -1,8 +1,10 @@
-import { FindOneOptions, Repository } from 'typeorm';
+import { FindOneOptions, FindOptionsWhere, ILike, Repository } from 'typeorm';
 import { validateOrReject } from 'class-validator';
 import { venueRepository } from './venue.repository';
 import { Venue } from './venue.entity';
 import { CreateVenueDTO } from './venue.dto';
+import { VenueSearchParams } from './venue.controller';
+import { computePaginationParams } from '@/lib/shared';
 
 class VenueService {
   private repository: Repository<Venue>;
@@ -22,6 +24,21 @@ class VenueService {
 
   findOneOrFail = async (options: FindOneOptions<Venue>) => {
     return this.repository.findOneOrFail(options);
+  };
+
+  search = async ({ name, ...rest }: VenueSearchParams) => {
+    const { skip, take } = computePaginationParams({ ...rest });
+
+    const where: FindOptionsWhere<Venue> = {};
+    if (name) {
+      where.name = ILike(`%${name}%`);
+    }
+
+    return this.repository.findAndCount({
+      where,
+      skip,
+      take,
+    });
   };
 }
 
