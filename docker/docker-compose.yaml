@@ -1,3 +1,4 @@
+name: showtimex-prod
 services:
   app:
     image: showtimex:prod
