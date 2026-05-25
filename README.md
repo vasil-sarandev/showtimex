@@ -21,6 +21,18 @@ Showtimex is an OSS Ticket Booking & Payment System that utlizes a Service-Orien
 - **docker-compose.yaml**
   The docker compose setup for the app in production mode. Doesn't include any of the application services, which at this point supposedly live in the Cloud or on a VPS.
 
+## Automated pipelines (CI/CD/Workflows)
+
+### Continuous Integration (GitHub Actions)
+
+- **Every push:** `npm ci` and unit tests (Vitest).
+- **Every pull request:** same tests; inject the secrets from GitHub Secrets and build the production Docker image (`docker/Dockerfile`, target `prod`); push to GitHub Container Registry. Registry credentials and app secrets come from GitHub Actions secrets / `GITHUB_TOKEN` (packages: write).
+
+### Continuous Deployment (AWS ECS)
+
+- **On release to `main` (or on tag):** ECS pulls the image from GHCR (registry auth configured on the cluster/task role), updates the service, and runs the new task with environment variables and secrets from AWS (Parameter Store / Secrets Manager).
+- PostgreSQL runs on AWS RDS (or equivalent), separate from the app container.
+
 ## Running the Application
 
 Copy the `/env/.env.local.sample` file into your own `/env.env.local` and make changes if needed that accommodate your setup.
