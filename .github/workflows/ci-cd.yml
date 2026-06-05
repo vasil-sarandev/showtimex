@@ -1,0 +1,35 @@
+name: Continiuous Integration & Deployment
+run-name: ${{ github.run_id }} - Showtimex CI&CD - 🚀
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v6
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm' # Speeds up your workflow by caching node_modules
+      - run: echo "✅ Node has been setup"
+
+      - name: Install dependencies
+        run: npm ci
+      - run: echo "💡 Dependencies installed."
+
+      - name: Run linter
+        run: npm run lint
+      - run: echo "✅ Linter is alright."
+
+      - name: Run tests
+        run: npm run test
+      - run: echo "✅ Tests passed"
