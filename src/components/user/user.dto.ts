@@ -1,7 +1,7 @@
-import { User } from './user.entity';
 import { EventResponseDTO } from '../event/event.dto';
 import { TicketResponseDTO } from '../ticket/ticket.dto';
 import { Payment } from '../payment/payment.entity';
+import { User } from './user.entity';
 
 export interface CreateUserDTO {
   first_name: string;

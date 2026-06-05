@@ -15,7 +15,8 @@
     "migration:revert": "cross-env TYPEORM_ENV_CONFIG_PATH=./env/.env.local npm run typeorm -- migration:revert -d ./src/lib/typeorm/typeorm.index",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:unit": "vitest run"
+    "test:unit": "vitest run",
+    "lint": "npx eslint"
   },
   "author": "Vasil Sarandev",
   "license": "ISC",
