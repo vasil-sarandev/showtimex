@@ -8,28 +8,25 @@ on:
     branches: [main]
 
 jobs:
-  showtimex-ci-cd:
+  run-linter:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v6
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'npm' # Speeds up your workflow by caching node_modules
-      - run: echo "✅ Node has been setup"
-
-      - name: Install dependencies
-        run: npm ci
-      - run: echo "💡 Dependencies installed."
-
+      - uses: ./.github/workflows/setup-runner/action.yml
       - name: Run linter
         run: npm run lint
       - run: echo "✅ Linter is alright."
 
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/workflows/setup-runner/action.yml
       - name: Run tests
         run: npm run test
       - run: echo "✅ Tests passed"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [run-linter, run-tests]
+    steps:
+      - name: 'Initiating Deployment'
+        run: echo "Deploying..."
