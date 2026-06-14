@@ -1,5 +1,5 @@
 name: Setup Node project
-description: Checkout repo, install Node, run npm ci
+description: Install Node and run npm ci (requires checkout first)
 
 inputs:
   node-version:
@@ -10,8 +10,6 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Check out repository code
-      uses: actions/checkout@v6
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:

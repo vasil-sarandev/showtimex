@@ -42,9 +42,10 @@ tests/
 docker/                  # Dockerfile + compose files
 env/                     # .env.local.sample, .env.local (not committed)
 .github/
+  actions/
+    setup-runner/action.yml   # Composite action: Node + npm ci
   workflows/
     ci-cd.yml
-    setup-runner/action.yml   # Composite action: checkout + Node + npm ci
 ```
 
 Path alias: `@/*` maps to `src/*` (configured in `tsconfig.json` and `vitest.config.ts`).
@@ -104,11 +105,13 @@ Reference implementation: `src/components/event/`.
 
 GitHub Actions workflow: `.github/workflows/ci-cd.yml`
 
-- **run-linter** and **run-tests** run in parallel; each uses the composite action at `.github/workflows/setup-runner`
+- **run-linter** and **run-tests** run in parallel; each checks out the repo, then uses the composite action at `.github/actions/setup-runner`
 - **deploy** runs after both succeed (`needs: [run-linter, run-tests]`)
 - Composite actions run steps inline on the same job runner — they do not share state across jobs
+- Local actions live under `.github/actions/`, not `.github/workflows/`
+- Run `actions/checkout` before a local action; the runner needs the repo on disk to load `action.yml`
 - Use `needs` (not `depends-on`) for job dependencies
-- Reference local actions by directory: `uses: ./.github/workflows/setup-runner` (not `action.yml`)
+- Reference local actions by directory: `uses: ./.github/actions/setup-runner` (not `action.yml`)
 
 ## Agent guidelines
 
