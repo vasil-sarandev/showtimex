@@ -11,7 +11,7 @@ jobs:
   run-linter:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/setup-runner/action.yml
+      - uses: ./.github/workflows/setup-runner
       - name: Run linter
         run: npm run lint
       - run: echo "✅ Linter is alright."
@@ -19,7 +19,7 @@ jobs:
   run-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/setup-runner/action.yml
+      - uses: ./.github/workflows/setup-runner
       - name: Run tests
         run: npm run test
       - run: echo "✅ Tests passed"
