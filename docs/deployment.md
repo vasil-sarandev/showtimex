@@ -7,7 +7,7 @@ How Showtimex is built, published, and run in production. This document reflects
 ```text
 ┌─────────────────┐     push main      ┌──────────────────┐
 │  GitHub Actions │ ─────────────────► │  Amazon ECR      │
-│  lint/test/build│                    │  showtimex:latest│
+│  lint/test/build│                    │  showtimex/api   │
 └─────────────────┘                    └────────┬─────────┘
                                                 │ docker pull
                                                 ▼
