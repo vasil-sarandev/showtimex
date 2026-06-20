@@ -21,17 +21,12 @@ Showtimex is an OSS Ticket Booking & Payment System that utlizes a Service-Orien
 - **docker-compose.yaml**
   The docker compose setup for the app in production mode. Doesn't include any of the application services, which at this point supposedly live in the Cloud or on a VPS.
 
-## Automated pipelines (CI/CD/Workflows)
+## Automated pipelines (CI/CD)
 
-### Continuous Integration (GitHub Actions)
+- **Every push and pull request:** lint and unit tests (GitHub Actions).
+- **Push to `main`:** build the production Docker image and push to **Amazon ECR**.
 
-- **Every push:** `npm ci` and unit tests (Vitest).
-- **Every pull request:** same tests; inject the secrets from GitHub Secrets and build the production Docker image (`docker/Dockerfile`, target `prod`); push to GitHub Container Registry. Registry credentials and app secrets come from GitHub Actions secrets / `GITHUB_TOKEN` (packages: write).
-
-### Continuous Deployment (AWS ECS)
-
-- **On release to `main` (or on tag):** ECS pulls the image from GHCR (registry auth configured on the cluster/task role), updates the service, and runs the new task with environment variables and secrets from AWS (Parameter Store / Secrets Manager).
-- PostgreSQL runs on AWS RDS (or equivalent), separate from the app container.
+Runtime deployment (EC2, RDS, secrets) is documented in **[docs/deployment.md](docs/deployment.md)**.
 
 ## Running the Application
 
@@ -56,9 +51,9 @@ For a better DX and interaction with the API, once the server is running, a _Swa
 
 ## Building the Applications / Running in production mode
 
-Make sure to create an `.env` file in the _/env_ folder - the "production builds" use that instead of _.env.local_.
+Copy `env/.env.sample` to `env/.env` and adjust values. Compose passes it at runtime via `env_file` (it is not baked into the prod image).
 
-Use the defined command for running the application in production mode. The steps to it are documented in the `/docker/.Dockerfile`.
+Use the defined command for running the application in production mode locally:
 
 ```
 npm run build

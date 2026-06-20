@@ -23,13 +23,12 @@ RUN npx tsc && npx tsc-alias
 
 # --------- PRODUCTION stage
 FROM base AS prod
-# copy the compiled app & package.json & env file & openapi.yaml
+# copy the compiled app & package.json & openapi.yaml
 COPY --from=build /usr/src/app/dist ./dist
 COPY --from=build /usr/src/app/package.json package.json
 COPY --from=build /usr/src/app/package-lock.json package-lock.json
-COPY ../env/.env .env
 COPY ../openapi.yaml openapi.yaml
 # install dependencies (without dev ones)
 RUN npm ci --omit=dev
-# run the compiled app
-CMD [ "node", "--env-file=.env", "dist/src/app.js" ]
+# run the compiled app (env vars injected at runtime, e.g. docker run --env-file)
+CMD [ "node", "dist/src/app.js" ]
