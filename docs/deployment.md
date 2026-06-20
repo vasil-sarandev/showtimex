@@ -23,4 +23,4 @@ How Showtimex is built, published, and run in production. This document reflects
 ```
 
 - **CI (GitHub):** build the prod Docker image and push to ECR.
-- **Runtime (AWS):** pull the image, inject configuration from SSM or Secrets Manager, connect to **RDS** (not Postgres inside the app container).
+- **Runtime (AWS):** pull the image, inject configuration from SSM or Secrets Manager, connect to **RDS** Postgres deployment.
