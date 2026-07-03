@@ -21,12 +21,34 @@ Showtimex is an OSS Ticket Booking & Payment System that utlizes a Service-Orien
 - **docker-compose.yaml**
   The docker compose setup for the app in production mode. Doesn't include any of the application services, which at this point supposedly live in the Cloud or on a VPS.
 
-## Automated pipelines (CI/CD)
+## Automated pipelines (CI/CD), Deployment & Infrastructure
+
+How Showtimex is built, published, and run in production.
+
+### Workflows (CI/CD)
 
 - **Every push and pull request:** lint and unit tests (GitHub Actions).
 - **Push to `main`:** build the production Docker image and push to **Amazon ECR**.
 
-Runtime deployment (EC2, RDS, secrets) is documented in **[docs/deployment.md](docs/deployment.md)**.
+### Architecture overview
+
+```text
+┌─────────────────┐     push main      ┌──────────────────┐
+│  GitHub Actions │ ─────────────────► │  Amazon ECR      │
+│  lint/test/build│                    │  showtimex/api   │
+└─────────────────┘                    └────────┬─────────┘
+                                                │ docker pull
+                                                ▼
+┌─────────────────┐     APP_* env      ┌──────────────────┐
+│  Amazon RDS     │ ◄───────────────── │  EC2 (+ Docker)  │
+│  PostgreSQL     │      connect       │  or ECS Fargate  │
+└─────────────────┘                    └────────┬─────────┘
+                                                │
+┌─────────────────┐                             │
+│  SSM / Secrets  │ ─── injected at start ──────┘
+│  Manager        │
+└─────────────────┘
+```
 
 ## Running the Application
 
@@ -38,35 +60,9 @@ After that you can run the _development_ run command which runs the application 
 npm run dev
 ```
 
-Alternatively if you don't want to run with Docker for some reason - run your own PostgreSQL instance, install the dependencies with `npm i` and then you can run the app with
-
-```JAVASCRIPT
-// development mode with HMR
-npx tsx watch --env-file=./env/.env.local "src/app.ts"
-```
-
 ## Swagger
 
 For a better DX and interaction with the API, once the server is running, a _Swagger UI_ instance is exposed at https://localhost:3000/swagger or your defined HOST:PORT address.
-
-## Building the Applications / Running in production mode
-
-Copy `env/.env.sample` to `env/.env` and adjust values. Compose passes it at runtime via `env_file` (it is not baked into the prod image).
-
-Use the defined command for running the application in production mode locally:
-
-```
-npm run build
-```
-
-If you don't want to run the application within a Docker Container - you can compile it and run it yourself -
-
-```JAVASCRIPT
-// compile and rewire paths
-npx tsc && npx tsc-alias
-// run the compiled app
-node /dist/app.js
-```
 
 ## Database Seeding
 
