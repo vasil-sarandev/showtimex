@@ -18,19 +18,20 @@ Showtimex is an OSS Ticket Booking & Payment System that utlizes a Service-Orien
 
 - **docker-compose.dev.yaml**
   The docker compose setup for the app in development mode. Also includes the RDBMS service - PostgreSQL with volumes that enables us to persist the data.
-- **docker-compose.yaml**
-  The docker compose setup for the app in production mode. Doesn't include any of the application services, which at this point supposedly live in the Cloud or on a VPS.
 
-## Automated pipelines (CI/CD), Deployment & Infrastructure
+## Running the Application
+
+Copy the `/env/.env.local.sample` file into your own `/env.env.local` and make changes if needed that accommodate your setup.
+
+After that you can run the _development_ run command which runs the application with HMR and the database.
+
+```
+npm run dev
+```
+
+### Automated pipelines (CI/CD), Deployment & Infrastructure
 
 How Showtimex is built, published, and run in production.
-
-### Workflows (CI/CD)
-
-- **Every push and pull request:** lint and unit tests (GitHub Actions).
-- **Push to `main`:** build the production Docker image and push to **Amazon ECR**.
-
-### Architecture overview
 
 ```text
 ┌─────────────────┐     push main      ┌──────────────────┐
@@ -48,16 +49,6 @@ How Showtimex is built, published, and run in production.
 │  SSM / Secrets  │ ─── injected at start ──────┘
 │  Manager        │
 └─────────────────┘
-```
-
-## Running the Application
-
-Copy the `/env/.env.local.sample` file into your own `/env.env.local` and make changes if needed that accommodate your setup.
-
-After that you can run the _development_ run command which runs the application with HMR and the database.
-
-```
-npm run dev
 ```
 
 ## Swagger
