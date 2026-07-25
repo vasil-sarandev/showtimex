@@ -27,7 +27,7 @@ jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
     needs: [run-linter, run-tests]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && vars.ENABLE_DEPLOYMENT == 'true'
     permissions:
       id-token: write
       contents: read
