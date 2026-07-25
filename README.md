@@ -29,27 +29,38 @@ After that you can run the _development_ run command which runs the application 
 npm run dev
 ```
 
-### Automated pipelines (CI/CD), Deployment & Infrastructure
+## Local vs. production topology
 
-How Showtimex is built, published, and run in production.
+Same app code and Dockerfile, different infrastructure running it:
 
-```text
-┌─────────────────┐     push main      ┌──────────────────┐
-│  GitHub Actions │ ─────────────────► │  Amazon ECR      │
-│  lint/test/build│                    │  showtimex/api   │
-└─────────────────┘                    └────────┬─────────┘
-                                                │ docker pull
-                                                ▼
-┌─────────────────┐     APP_* env      ┌──────────────────┐
-│  Amazon RDS     │ ◄───────────────── │  EC2 (+ Docker)  │
-│  PostgreSQL     │      connect       │  or ECS Fargate  │
-└─────────────────┘                    └────────┬─────────┘
-                                                │
-┌─────────────────┐                             │
-│  SSM / Secrets  │ ─── injected at start ──────┘
-│  Manager        │
-└─────────────────┘
+| Concern | Local (docker compose) | Production (AWS) |
+| --- | --- | --- |
+| Process | `app` + `postgres` as compose services | Single EC2 instance running one `showtimex-api` Docker container |
+| Database | `postgres:17` container, named volume | Amazon RDS PostgreSQL — TLS required, private subnet, no public access |
+| Image | `dev` stage, bind-mounted source, `tsx watch` for HMR | `prod` stage from ECR, immutable git-SHA tag (no `:latest`) |
+| Config | `env/.env.local` file | AWS SSM Parameter Store, fetched at container start |
+| Networking | `internal-net` bridge network, service-name resolution | ALB (public) → EC2 (Docker, security-group-restricted) → RDS (private) |
+| Access | N/A | AWS SSM Session Manager — no SSH key, no open port 22 |
+| HTTP | `localhost:3000` | ALB DNS name → target group → EC2:3000 |
+| Deploy | `npm run dev` | GitHub Actions → ECR push → SSM Run Command → `docker run` |
+
+## CI/CD / Production Pipeline
+
+Quick mental model:
+
 ```
+GitHub Actions → ECR (image) → SSM Run Command → EC2 (Docker) → RDS
+```
+
+On every push to `main`, `.github/workflows/ci-cd.yml` runs:
+
+1. **`run-linter`** and **`run-tests`** — ESLint and the Vitest suite, in parallel.
+2. **`build-and-push-image`** — only on a push to `main` (not PRs), and only when the `ENABLE_DEPLOYMENT` repo variable is `true`. Builds the `prod` stage of the Dockerfile and pushes it to ECR tagged with the git SHA only — no floating `:latest`, so ECR tag immutability can stay on.
+3. **`deploy`** — triggers [`scripts/deploy-ec2.sh`](scripts/deploy-ec2.sh) on the EC2 instance via **SSM Run Command** (`aws ssm send-command`, no SSH). The script logs in to ECR, pulls the new image tag, fetches the app's env vars from SSM Parameter Store, stops the old container, and starts the new one with `--restart unless-stopped`.
+
+Setting `ENABLE_DEPLOYMENT` to `false` skips steps 2 and 3, so lint/test still run but nothing is built or deployed.
+
+Two separate IAM roles authenticate via GitHub OIDC, not one: `AWS_ROLE_ARN` (ECR push only) and `AWS_DEPLOY_ROLE_ARN` (SSM deploy only) — `ssm:SendCommand` is effectively "run shell commands as root on the instance," a materially bigger capability than pushing an image, so it gets its own scoped role rather than being added to the push role.
 
 ## Swagger
 
