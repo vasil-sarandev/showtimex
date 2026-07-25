@@ -1,6 +1,6 @@
-# AGENTS.md
+# CLAUDE.md
 
-Guidance for AI coding agents working in the Showtimex repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project overview
 
@@ -23,9 +23,9 @@ Showtimex is an open-source ticket booking and payment system. It uses a **servi
 ```
 src/
   app.ts                 # Entry point
-  setup-app.ts           # DB/bootstrap before server starts
-  config.ts              # Env-backed config exports
-  components/            # Domain modules (event, ticket, user, payment, etc.)
+  setup-app.ts            # DB/bootstrap before server starts
+  config.ts               # Env-backed config exports
+  components/              # Domain modules (event, ticket, user, payment, etc.)
     <domain>/
       <domain>.router.ts
       <domain>.controller.ts
@@ -33,14 +33,14 @@ src/
       <domain>.repository.ts
       <domain>.entity.ts
       <domain>.dto.ts
-  lib/                   # Shared infra (typeorm, stripe, swagger, shared utils)
-  middlewares/           # auth, error, logger
-  migrations/            # TypeORM migrations
+  lib/                    # Shared infra (typeorm, stripe, swagger, shared utils)
+  middlewares/             # auth, error, logger
+  migrations/              # TypeORM migrations
 tests/
-  unit/                  # Mirrors src/components structure (*.spec.ts)
+  unit/                   # Mirrors src/components structure (*.spec.ts)
   setup.ts
-docker/                  # Dockerfile + compose files
-env/                     # .env.local.sample, .env.local (not committed)
+docker/                   # Dockerfile + compose files
+env/                      # .env.local.sample, .env.local (not committed)
 .github/
   actions/
     setup-runner/action.yml   # Composite action: Node + npm ci
@@ -71,11 +71,17 @@ Patterns to match when adding or changing code:
 
 Reference implementation: `src/components/event/`.
 
+### Bootstrap and request flow
+
+- `src/app.ts` calls `setupApp()` (`src/setup-app.ts`), which awaits `initializeTypeORM()` before invoking the callback that builds the Express app and calls `app.listen`. Add any new startup dependency (cache warmup, queue connection, etc.) to the `Promise.all([...])` in `setupApp`, not elsewhere.
+- Middleware order in `src/app.ts` is `loggerMiddleware` → `appRouter` → `errorMiddleware`. `errorMiddleware` must stay last since Express identifies error handlers by arity/position.
+- Throw `AppError(status, message)` anywhere in the service/controller call chain; it's caught by `errorMiddleware` and serialized as `{ message }`. Non-`AppError` throws are logged server-side and returned as a generic 500 — their message does not reach the client.
+
 ## Environment and config
 
 - Local dev env: copy `env/.env.local.sample` → `env/.env.local`
 - Production env: `env/.env` (used by production Docker builds)
-- Config values are read in `src/config.ts`; do not read `process.env` directly elsewhere unless there is a strong reason
+- `src/config.ts` reads `process.env` once at module load into exported constants (`APP_PORT`, `APP_DATABASE_*`, `APP_JWT_SECRET`, etc.) — there is no config object/class; import the specific constant you need. Do not read `process.env` directly elsewhere unless there is a strong reason.
 - Migrations use `TYPEORM_ENV_CONFIG_PATH` because TypeORM's CLI does not support `--env-file`
 - Default Docker dev setup expects `APP_DATABASE_HOST` to be the compose service name — run migrations inside Docker when using sample env values
 
@@ -84,14 +90,17 @@ Reference implementation: `src/components/event/`.
 | Task | Command |
 |------|---------|
 | Dev (Docker + HMR) | `npm run dev` |
-| Production build (Docker) | `npm run build` |
 | Stop containers | `npm run docker:down` |
 | Lint | `npm run lint` |
 | Tests | `npm run test` |
 | Tests (watch) | `npm run test:watch` |
+| Run a single test file | `npx vitest run tests/unit/event/event.controller.spec.ts` |
+| Run tests matching a name | `npx vitest run -t "should create event"` |
 | Create migration | `npm run migration:create <Name>` |
 | Generate migration | `npm run migration:generate <Name>` |
 | Run migrations | `npm run migration:run` |
+
+There is no `npm run build` script. Production images are built directly with Docker: `docker build -f ./Dockerfile --target prod .` (see `.github/workflows/ci-cd.yml`); the `prod` stage runs `npx tsc && npx tsc-alias` internally.
 
 ## Testing conventions
 
@@ -106,7 +115,7 @@ Reference implementation: `src/components/event/`.
 GitHub Actions workflow: `.github/workflows/ci-cd.yml`
 
 - **run-linter** and **run-tests** run in parallel; each checks out the repo, then uses the composite action at `.github/actions/setup-runner`
-- **deploy** runs after both succeed (`needs: [run-linter, run-tests]`)
+- **build-and-push-image** runs after both succeed (`needs: [run-linter, run-tests]`), only on push to `main`; it builds the `prod` Docker target and pushes to ECR (`showtimex/api`) using GitHub OIDC (`aws-actions/configure-aws-credentials`)
 - Composite actions run steps inline on the same job runner — they do not share state across jobs
 - Local actions live under `.github/actions/`, not `.github/workflows/`
 - Run `actions/checkout` before a local action; the runner needs the repo on disk to load `action.yml`
