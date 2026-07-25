@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 # --------- DEVELOPMENT stage
 FROM base AS dev
 # copy the source code into container
-COPY ../ .
+COPY ./ .
 # install the dependencies
 RUN npm install
 # run in development mode with hot reload
@@ -15,7 +15,7 @@ CMD ["npx", "tsx", "watch", "--env-file=./env/.env.local", "./src/app.ts"]
 # --------- BUILD stage
 FROM base AS build
 # copy the source code into container
-COPY ../ .
+COPY ./ .
 # install the dependencies
 RUN npm install
 # compile the code and rewire paths
@@ -27,7 +27,7 @@ FROM base AS prod
 COPY --from=build /usr/src/app/dist ./dist
 COPY --from=build /usr/src/app/package.json package.json
 COPY --from=build /usr/src/app/package-lock.json package-lock.json
-COPY ../openapi.yaml openapi.yaml
+COPY ./openapi.yaml openapi.yaml
 # install dependencies (without dev ones)
 RUN npm ci --omit=dev
 # run the compiled app (env vars injected at runtime, e.g. docker run --env-file)
