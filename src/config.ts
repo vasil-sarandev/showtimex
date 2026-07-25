@@ -17,7 +17,6 @@ export const APP_DATABASE_PORT = parseInt(process.env.APP_DATABASE_PORT as strin
 export const APP_DATABASE_USERNAME = process.env.APP_DATABASE_USERNAME as string;
 export const APP_DATABASE_PASSWORD = process.env.APP_DATABASE_PASSWORD as string;
 export const APP_DATABASE = process.env.APP_DATABASE as string;
-export const APP_MOCK_AUTH = Boolean(process.env.APP_MOCK_AUTH as string);
-export const APP_DATABASE_SYNCHRONIZE_FLAG = Boolean(
-  process.env.APP_DATABASE_SYNCHRONIZE_FLAG as string,
-);
+export const APP_DATABASE_SSL_FLAG = process.env.APP_DATABASE_SSL_FLAG === 'true';
+export const APP_MOCK_AUTH = process.env.APP_MOCK_AUTH === 'true';
+export const APP_DATABASE_SYNCHRONIZE_FLAG = process.env.APP_DATABASE_SYNCHRONIZE_FLAG === 'true';
