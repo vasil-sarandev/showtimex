@@ -6,10 +6,12 @@ import { venueRouter } from './venue/venue.router';
 import { ticketRouter } from './ticket/ticket.router';
 import { performerRouter } from './performer/performer.router';
 import { bffRouter } from './backend-for-frontend/bff.router';
+import { systemRouter } from './system/system.router';
 import { swaggerRouter } from '@/lib/swagger/swagger.index';
 
 export const appRouter = Router();
 
+appRouter.use(systemRouter);
 appRouter.use('/user', userRouter);
 appRouter.use('/payment', paymentRouter);
 appRouter.use('/event', eventRouter);
