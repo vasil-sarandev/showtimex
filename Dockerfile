@@ -11,7 +11,6 @@ RUN npm install
 # run in development mode with hot reload
 CMD ["npx", "tsx", "watch", "--env-file=./env/.env.local", "./src/app.ts"]
 
-
 # --------- BUILD stage
 FROM base AS build
 # copy the source code into container
